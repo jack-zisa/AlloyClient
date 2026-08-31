@@ -136,6 +136,14 @@ public abstract partial class GameWindow {
 
     [Conditional("DEBUG")]
     private static void EnableDebugOutput() {
+        // KHR_debug is core only from GL 4.3 onward - skip on older contexts
+        // rather than call a function pointer the driver never loaded.
+        GL.GetInteger(GetPName.MajorVersion, out var major);
+        GL.GetInteger(GetPName.MinorVersion, out var minor);
+        if (major < 4 || (major == 4 && minor < 3)) {
+            return;
+        }
+
         GL.DebugMessageCallback(OnDebugMessage, nint.Zero);
         GL.DebugMessageControl(DebugSource.DebugSourceApi, DebugType.DebugTypeOther, DebugSeverity.DontCare, 1, [131185], false);
         GL.Enable(EnableCap.DebugOutput);

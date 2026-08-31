@@ -257,13 +257,14 @@ public sealed class ItemTile : Sprite {
 
         TooltipManager.RemoveTooltip(_tooltip);
 
+        _sprite.Scale = Stage.ScreenScale;
+
         RemoveChild(_sprite);
         RemoveChild(_tierText);
-        
-        _sprite.Scale = Stage.ScreenScale;
+
+        GameScreen.GameSprite.AddChild(_sprite);
         _sprite.StartDrag();
         _sprite.AddEventListener(MouseEvent.LeftUp, OnEndDrag);
-        GameScreen.GameSprite.AddChild(_sprite);
     }
 
     private void OnEndDrag(MouseEvent args) {

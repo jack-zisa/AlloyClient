@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Alloy.Engine.Graphics;
 using Alloy.Engine.Graphics.Buffers;
 using OpenTK.Graphics.OpenGL;
@@ -11,24 +11,17 @@ public static class SpriteRender {
     private const int IndexBufferSize = InstanceBufferSize * 6; // Most sprites are a quad which has 6 indices
     private const int VertexBufferSize = InstanceBufferSize * 4; // Most sprites are a quad which has 4 vertices
 
-    private static ushort _instanceCount;
-    private static SpriteInstanceData[] _instanceData; 
-    private static StorageBuffer<SpriteInstanceData> _instanceBuffer;
-    
     private static int _indexCount;
     private static ushort[] _indices;
     private static IndexBuffer _indexBuffer;
-    
+
     private static ushort _vertexCount;
     private static SpriteVertexData[] _vertices;
     private static VertexBuffer<SpriteVertexData> _vertexBuffer;
-    
+
     private static VertexArrayObject _vao;
 
     internal static void Init() {
-        _instanceData = new SpriteInstanceData[InstanceBufferSize];
-        _instanceBuffer = new StorageBuffer<SpriteInstanceData>(InstanceBufferSize);
-
         _indices = new ushort[IndexBufferSize];
         _indexBuffer = new IndexBuffer(IndexBufferSize);
 
@@ -36,33 +29,29 @@ public static class SpriteRender {
         _vertexBuffer = new VertexBuffer<SpriteVertexData>(SpriteVertexData.VertexStride, VertexBufferSize);
 
         _vao = new VertexArrayObject();
-        
+
         _vertexBuffer.BindTo(_vao);
         _indexBuffer.BindTo(_vao);
-        
+
         GL.BindVertexArray(0);
     }
 
     internal static void StartDraw() {
         _vao.Bind();
-        _instanceBuffer.BindToIndex(0);
-        
+
         UiRender.UiShader.Apply();
-        
+
         GL.Disable(EnableCap.DepthTest);
         GL.Disable(EnableCap.StencilTest);
 
-        _instanceCount = 0;
         _indexCount = 0;
         _vertexCount = 0;
     }
 
     internal static void Draw(SpriteInstanceData data, ReadOnlySpan<ushort> indices, ReadOnlySpan<VertexUi> vertices) {
-        if (_instanceCount + 1 > InstanceBufferSize || _indexCount + indices.Length > IndexBufferSize || _vertexCount + vertices.Length > VertexBufferSize)
+        if (_indexCount + indices.Length > IndexBufferSize || _vertexCount + vertices.Length > VertexBufferSize)
             Flush();
-        
-        _instanceData[_instanceCount] = data;
-        var instanceId = _instanceCount++;
+
         var numVertices = (ushort)0;
 
         var len = indices.Length;
@@ -74,10 +63,10 @@ public static class SpriteRender {
 
         numVertices++;
         for (var i = 0; i < numVertices; i++) {
-            _vertices[_vertexCount + i] = new SpriteVertexData(vertices[i], instanceId);
+            _vertices[_vertexCount + i] = new SpriteVertexData(vertices[i], data);
         }
         _vertexCount += numVertices;
-        
+
         UiRender.LastRenderCount++;
     }
 
@@ -87,13 +76,13 @@ public static class SpriteRender {
     }
 
     private static void Flush() {
-        _instanceBuffer.SetData(_instanceData.AsSpan());
+        if (_indexCount < 1) return;
+
         _indexBuffer.SetData(_indices.AsSpan());
         _vertexBuffer.SetData(_vertices.AsSpan());
-        
+
         GL.DrawElements(PrimitiveType.Triangles, _indexCount, DrawElementsType.UnsignedShort, 0);
-        
-        _instanceCount = 0;
+
         _indexCount = 0;
         _vertexCount = 0;
     }

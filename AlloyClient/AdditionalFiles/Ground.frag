@@ -1,6 +1,4 @@
-﻿#version 460 core
-
-#define TileBuffer
+﻿#version 330 core
 
 uniform sampler2D GameTexture;
 uniform vec4 AlphaBlends[8];

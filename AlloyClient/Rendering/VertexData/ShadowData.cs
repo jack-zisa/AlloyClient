@@ -1,16 +1,22 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 using Alloy.Common;
 using Alloy.Engine.Graphics.Buffers;
+using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 
 namespace AlloyClient.Rendering.VertexData;
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-public struct ShadowData(Vector2 position, float scale, Color color) : IBufferData<ShadowData> {
+public struct ShadowData(Vector2 position, float scale, Color color) : IVertexData<ShadowData> {
     public Vector2 Position = position;
     public float Scale = scale;
     public uint Color = color.PackedValue;
+
+    public static VertexStride VertexStride { get; } = new([
+        new ElementFormat(0, VertexAttribType.Float, FormatType.Vector3),
+        new ElementFormat(1, VertexAttribType.UnsignedInt, FormatType.Default),
+    ], true);
 
     public override int GetHashCode() {
         HashCode.Combine(Position, Scale, Color);

@@ -1,17 +1,10 @@
-﻿#version 460 core
+﻿#version 330 core
 precision highp float;
-
-struct extra {
-    float Type;
-    float SortId;
-    float Shade;
-    float Alpha;
-};
 
 in OBJECT_OUT {
     vec2 BaseUV;
     vec4 UV;
-    extra Extra;
+    vec4 Extra; // x=Type, y=SortId, z=Shade, w=Alpha
     vec4 Color;
     vec4 Mask1;
     vec4 Mask2;
@@ -43,7 +36,7 @@ float median(float a, float b, float c) {
 }
 
 float samp(vec2 uv, vec2 dx, vec2 dy) {
-    return textureGrad(GameTexture, uv, dx, dy).a;
+    return textureLod(GameTexture, uv, 0.0).a;
 }
 
 bool inBounds(vec2 uv, vec2 minUV, vec2 maxUV){
@@ -65,17 +58,19 @@ vec4 GetGameObject() {
     vec2 uv = map(vsInput.BaseUV, vsInput.UV.xy, uvMax);
     vec2 dx = dFdx(uv);
     vec2 dy = dFdy(uv);
-    vec4 color = textureGrad(GameTexture, uv, dx, dy);
-    color.rgb -= vsInput.Extra.Shade * 0.241 * clamp(vsInput.BaseUV.y - 0.4, 0.0, 0.4);
+    // every atlas here only has 1 mip level so textureGrad's LOD select was
+    // pointless - just a buggy path on old Intel drivers. dx/dy still used below.
+    vec4 color = textureLod(GameTexture, uv, 0.0);
+    color.rgb -= vsInput.Extra.z * 0.241 * clamp(vsInput.BaseUV.y - 0.4, 0.0, 0.4);
     if (RenderPass == OpaquePass){
-        if (color.a < 1.0 || vsInput.Extra.Alpha < 1.0){
+        if (color.a < 1.0 || vsInput.Extra.w < 1.0){
             discard;
         }
         return color;
     }
 
     if (color.a >= 1.0){
-        if (vsInput.Extra.Alpha < 1.0){
+        if (vsInput.Extra.w < 1.0){
             return color;
         }
         discard;
@@ -176,7 +171,7 @@ vec4 GetText() {
 
 void main() {
     vec4 outputColor;
-    float id = vsInput.Extra.Type;
+    float id = vsInput.Extra.x;
 
     if (id == TypeGameObject || id == TypeEffect) {
         outputColor = GetGameObject();
@@ -188,7 +183,7 @@ void main() {
         outputColor = vec4(0, 0, 0, 0);
     }
 
-    outputColor.a *= vsInput.Extra.Alpha;
+    outputColor.a *= vsInput.Extra.w;
     if (outputColor.a == 0) {
         discard;
     }

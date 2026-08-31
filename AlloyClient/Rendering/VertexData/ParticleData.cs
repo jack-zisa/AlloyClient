@@ -1,15 +1,21 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 using Alloy.Engine.Graphics.Buffers;
+using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 
 namespace AlloyClient.Rendering.VertexData;
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-public struct ParticleData(Vector3 position, Vector4 color) : IBufferData<ParticleData> {
+public struct ParticleData(Vector3 position, Vector4 color) : IVertexData<ParticleData> {
     public Vector4 Position = new Vector4(position, 1);
     public Vector4 Color = color;
-    
+
     public static unsafe int Size { get; } = sizeof(ParticleData);
+
+    public static VertexStride VertexStride { get; } = new([
+        new ElementFormat(0, VertexAttribType.Float, FormatType.Vector4),
+        new ElementFormat(1, VertexAttribType.Float, FormatType.Vector4),
+    ], true);
 
     public override int GetHashCode() {
         return Position.GetHashCode() * 397 ^ Color.GetHashCode();

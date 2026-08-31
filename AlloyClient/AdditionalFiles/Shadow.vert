@@ -1,6 +1,4 @@
-﻿#version 460 core
-
-#define ShadowBuffer 
+﻿#version 330 core
 
 uniform mat4 FullMatrix;
 uniform mat4 BillMatrix;
@@ -23,30 +21,20 @@ const vec2 shadowUV[6] = vec2[6](
     vec2(1.0, 0.0)
 );
 
-struct InstanceData {
-    vec2 Position;
-    float Scale;
-    uint Color;
-};
-
-layout(std140) uniform ShadowData {
-    InstanceData data[ShadowBuffer];
-} instanceBuffer;
+layout (location = 0) in vec3 iPosScale; // xy = Position, z = Scale
+layout (location = 1) in uint iColor;
 
 out vec2 BaseUV;
 out flat uint Color;
 
 void main() {
-    int instanceId = gl_VertexID / 6;
-    int verId = gl_VertexID % 6;
-    
-    InstanceData data = instanceBuffer.data[instanceId];
-    
-    vec4 pos = vec4(shadowPos[verId] * data.Scale, 0, 1) * BillMatrix;
-    pos.xy += data.Position.xy;
-    
+    int verId = gl_VertexID;
+
+    vec4 pos = vec4(shadowPos[verId] * iPosScale.z, 0, 1) * BillMatrix;
+    pos.xy += iPosScale.xy;
+
     gl_Position = pos * FullMatrix;
-    
+
     BaseUV = shadowUV[verId];
-    Color = data.Color;
+    Color = iColor;
 }

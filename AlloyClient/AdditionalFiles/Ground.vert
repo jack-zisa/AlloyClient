@@ -1,6 +1,4 @@
-﻿#version 460 core
-
-#define TileBuffer 
+﻿#version 330 core
 
 uniform mat4 FullMatrix;
 uniform float GameTime;
@@ -23,17 +21,11 @@ const vec2 tileUV[6] = vec2[6](
     vec2(1.0, 0.0)
 );
 
-struct InstanceData {
-    vec4 Position;
-    vec4 UV;
-    vec4 Animate;
-    vec4 Mask;
-    vec4 Temp;
-};
-
-layout(std140, binding = 0) readonly buffer InstanceBuffer {
-    InstanceData data[TileBuffer];
-} instanceBuffer;
+layout (location = 0) in vec4 iPosition;
+layout (location = 1) in vec4 iUV;
+layout (location = 2) in vec4 iAnimate;
+layout (location = 3) in vec4 iMask;
+layout (location = 4) in vec4 iTemp;
 
 out GROUND_OUTPUT {
     vec2 baseUV;
@@ -44,20 +36,17 @@ out GROUND_OUTPUT {
 } vsOutput;
 
 void main() {
-    int instanceId = gl_VertexID / 6;
-    int verId = gl_VertexID % 6;
-    
-    InstanceData data = instanceBuffer.data[instanceId];
+    int verId = gl_VertexID;
 
     vec4 inputPosition = vec4(tilePos[verId], 0, 1);
     inputPosition.xy = (inputPosition.xy - 0.5) * 1.002 + 0.5;
-    inputPosition.xy += data.Position.xy;
+    inputPosition.xy += iPosition.xy;
     gl_Position = inputPosition * FullMatrix;
 
     vsOutput.baseUV = tileUV[verId];
-    vsOutput.coreUV.x = tileUV[verId].x + data.Position.z + sin(GameTime * data.Animate.x) + GameTime * data.Animate.z;
-    vsOutput.coreUV.y = tileUV[verId].y + data.Position.w + sin(GameTime * data.Animate.y) + GameTime * data.Animate.w;
-    vsOutput.UV = data.UV;
-    vsOutput.Mask = data.Mask;
-    vsOutput.Swizzle = data.Temp.x;
+    vsOutput.coreUV.x = tileUV[verId].x + iPosition.z + sin(GameTime * iAnimate.x) + GameTime * iAnimate.z;
+    vsOutput.coreUV.y = tileUV[verId].y + iPosition.w + sin(GameTime * iAnimate.y) + GameTime * iAnimate.w;
+    vsOutput.UV = iUV;
+    vsOutput.Mask = iMask;
+    vsOutput.Swizzle = iTemp.x;
 }

@@ -25,7 +25,7 @@ using OpenTK.Platform;
 
 namespace AlloyClient;
 
-public sealed class Main() : GameWindow(new Version(4, 6), ILogger.Factory) {
+public sealed class Main() : GameWindow(new Version(3, 3), ILogger.Factory) {
 
     public static readonly Signal OnQuit = new ();
     public static readonly Signal<ScreenType> OnScreenChange = new();
@@ -104,7 +104,7 @@ public sealed class Main() : GameWindow(new Version(4, 6), ILogger.Factory) {
         var titleBackground = ContentLoader.LoadTexture("TitleScreen/TitleScreenBackground.png");
         var titleGraphic = ContentLoader.LoadTexture("TitleScreen/TitleScreenGraphic.png");
         var font = new BitmapFamily(ContentLoader.LoadFont("Fonts/MyriadPro/MyriadPro.msdf"));
-        
+
         // Init content that depends on any atlas
         ModelData.Load();
         SliceLibrary.Load();

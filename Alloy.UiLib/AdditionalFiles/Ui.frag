@@ -2,14 +2,14 @@
 
 in VS_OUT {
     vec4 Position1;
-    flat uint Color;
-    flat uint Override;
     vec2 Info;
     vec2 UVCoords;
     vec4 Scissor;
     vec4 Extra1;
     vec4 Extra2;
     vec4 ColorTransform;
+    vec4 Color;
+    vec4 Override;
 } inp;
 
 out vec4 FragColor;
@@ -79,26 +79,6 @@ float screenPxRange(vec2 uv) {
     return max(0.5 * dot(unitRange, screenSize), 1.0);
 }
 
-vec2 SafeNormalize(vec2 v) {
-    float vLength = length(v);
-
-    vLength = (vLength > 0.0) ?
-    1.0 / vLength : 0.0;
-
-    return v * vLength;
-}
-
-float GetOpacityFromDistance(float signedDistance, vec2 Jdx, vec2 Jdy) {
-    const float distanceLimit = sqrt(2.0f) / 2.0f;
-    float thickness = 1.0f / (PixelRange / 2.0);
-
-    vec2 gradientDistance = SafeNormalize(vec2(dFdx(signedDistance), dFdy(signedDistance)));
-    vec2 gradient = vec2(gradientDistance.x * Jdx.x + gradientDistance.y * Jdy.x, gradientDistance.x * Jdx.y + gradientDistance.y * Jdy.y);
-    float scaledDistanceLimit = min(thickness * distanceLimit * length(gradient), 0.5f);
-
-    return smoothstep(-scaledDistanceLimit, scaledDistanceLimit, signedDistance);
-}
-
 vec4 RenderText() {
     vec4 mtsdf = texture(TextTexture, inp.UVCoords);
     float dist = median(mtsdf.r, mtsdf.g, mtsdf.b) - 0.5;
@@ -107,34 +87,29 @@ vec4 RenderText() {
     float bodyDist = dist * pxRange;
     float glowDist = mtsdf.a;
     float glowSize = inp.Extra1.x / PixelRange;
-    float bodyAlpha;
-    float glowAlpha;
+    // The small-text path used a nested dFdx/dFdy derivative chain
+    // (GetOpacityFromDistance) for finer anti-aliasing, but that chain
+    // reads back broken on old Intel GL 3.3 drivers. Use the same
+    // simple clamp-based path as normal-size text everywhere - slightly
+    // less crisp at small sizes, but correct on all hardware.
+    float bodyAlpha = clamp(bodyDist + 0.5f, 0.0f, 1.0f);
+    float glowAlpha = glowDist * glowSize;
 
-    if (inp.Extra1.y == TextTypeSmall) {
-        vec2 pixelCoord = inp.UVCoords * TextTextureSize;
-        vec2 Jdx = dFdx(pixelCoord);
-        vec2 Jdy = dFdy(pixelCoord);
-        bodyAlpha = GetOpacityFromDistance(bodyDist, Jdx, Jdy);
-        glowAlpha = GetOpacityFromDistance(glowDist, Jdx, Jdy) * glowSize;
-    } else {
-        bodyAlpha = clamp(bodyDist + 0.5f, 0.0f, 1.0f);
-        glowAlpha = glowDist * glowSize;
-    }
-
-    vec4 color = mix(unpackColor(inp.Override), unpackColor(inp.Color), bodyAlpha);
+    vec4 color = mix(inp.Override, inp.Color, bodyAlpha);
     float alpha = bodyAlpha + glowAlpha;
     return vec4(color.rgb, alpha);
 }
 
 float samp(vec2 uv, vec2 dx, vec2 dy) {
-    return textureGrad(GameAtlasTexture, uv, dx, dy).a;
+    return textureLod(GameAtlasTexture, uv, 0.0).a;
 }
 
 vec4 RenderOutline() {
     vec2 uv = inp.UVCoords;
     vec2 dx = dFdx(uv);
     vec2 dy = dFdy(uv);
-    vec4 color = textureGrad(GameAtlasTexture, uv, dx, dy);
+    // same deal as Object.frag - textureLod instead of textureGrad, only 1 mip level anyway
+    vec4 color = textureLod(GameAtlasTexture, uv, 0.0);
 
     if (inp.UVCoords.y > inp.Extra1.x) {
         color.rgb -= 0.241 * (((inp.UVCoords.y - inp.Extra1.y) / inp.Extra1.z) - 0.4);
@@ -148,7 +123,7 @@ vec4 RenderOutline() {
         discard;
     }
 
-    vec4 outlineColor = unpackColor(inp.Override);
+    vec4 outlineColor = inp.Override;
     float scale = min(4, inp.Extra2.y / 60.0); // Extra2.y is the texture height 
     
     vec2 texSize = vec2(textureSize(GameAtlasTexture, 0));
@@ -242,7 +217,7 @@ vec4 RenderEllipse() {
         color_val = 0;
     }
 
-    return mix(unpackColor(inp.Color), unpackColor(inp.Override), color_val);
+    return mix(inp.Color, inp.Override, color_val);
 }
 
 void main() {
@@ -254,7 +229,7 @@ void main() {
         discard;
     }
 
-    vec4 color = unpackColor(inp.Color);
+    vec4 color = inp.Color;
 
     float type = inp.Info.x;
 

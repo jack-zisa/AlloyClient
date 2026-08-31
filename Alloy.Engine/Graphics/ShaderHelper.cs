@@ -17,19 +17,6 @@ internal static class ShaderHelper {
         }
     }
     
-    internal static void LoadUniformBlocks(int handle, Dictionary<string, Shader.UniformBlockInfo> blocks) {
-        GL.GetProgramInterfacei(handle, ProgramInterface.UniformBlock, ProgramInterfacePName.ActiveResources, out var count);
-        if (count == 0)
-            return;
-        
-        GL.GetProgramInterfacei(handle, ProgramInterface.UniformBlock, ProgramInterfacePName.MaxNameLength, out var maxLength);
-        for (var i = 0u; i < count; i++) {
-
-            var blockName = GL.GetProgramResourceName(handle, ProgramInterface.UniformBlock, i, maxLength, out _);
-            blocks[blockName] = new Shader.UniformBlockInfo(i);
-        }
-    }
-
     internal static void Compile(int handle, string name, string path, (string, string)[] defines) {
         var p1 = path + ".vert";
         var p2 = path + ".frag";

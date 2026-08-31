@@ -1,13 +1,14 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 using Alloy.Common;
 using Alloy.Engine.Graphics.Buffers;
+using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 
 namespace AlloyClient.Rendering.VertexData;
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-public struct VertexObject(Vector3 position, Vector4 uv, Vector4 scale, Vector4 rotation, ExtraData extra, Color color) : IBufferData<VertexObject>, IComparable<VertexObject> {
+public struct VertexObject(Vector3 position, Vector4 uv, Vector4 scale, Vector4 rotation, ExtraData extra, Color color) : IVertexData<VertexObject>, IComparable<VertexObject> {
     public Vector4 Position = new (position, 1);
     public Vector4 UV = uv;
     public Vector4 Scale = scale;
@@ -17,6 +18,17 @@ public struct VertexObject(Vector3 position, Vector4 uv, Vector4 scale, Vector4 
     public Vector4 Mask1;
     public Vector4 Mask2;
     // TODO: add 3rd mask channel and flash channel
+
+    public static VertexStride VertexStride { get; } = new([
+        new ElementFormat(0, VertexAttribType.Float, FormatType.Vector4),
+        new ElementFormat(1, VertexAttribType.Float, FormatType.Vector4),
+        new ElementFormat(2, VertexAttribType.Float, FormatType.Vector4),
+        new ElementFormat(3, VertexAttribType.Float, FormatType.Vector4),
+        new ElementFormat(4, VertexAttribType.Float, FormatType.Vector4),
+        new ElementFormat(5, VertexAttribType.Float, FormatType.Vector4),
+        new ElementFormat(6, VertexAttribType.Float, FormatType.Vector4),
+        new ElementFormat(7, VertexAttribType.Float, FormatType.Vector4),
+    ], true);
 
     public override int GetHashCode() {
         return ((((Position.GetHashCode() * 397 ^ UV.GetHashCode())
@@ -50,7 +62,7 @@ public struct VertexObject(Vector3 position, Vector4 uv, Vector4 scale, Vector4 
     public bool Equals(VertexObject other) {
         return Position.Equals(other.Position) && UV.Equals(other.UV) && Scale.Equals(other.Scale) && Rotation.Equals(other.Rotation) && Extra.Equals(other.Extra) && Color.Equals(other.Color);
     }
-    
+
     public int CompareTo(VertexObject other) {
         if (Extra.Y < other.Extra.Y) {
             return 1;
@@ -59,7 +71,7 @@ public struct VertexObject(Vector3 position, Vector4 uv, Vector4 scale, Vector4 
         if (Extra.Y > other.Extra.Y) {
             return -1;
         }
-        
+
         return 0;
     }
 }
