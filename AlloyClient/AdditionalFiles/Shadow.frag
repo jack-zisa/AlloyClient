@@ -3,7 +3,7 @@
 out vec4 FragColor;
 
 in vec2 BaseUV;
-in flat uint Color;
+flat in uint Color;
 
 // ABGR
 vec3 unpackColor(uint color) {

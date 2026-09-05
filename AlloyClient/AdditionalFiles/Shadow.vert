@@ -25,7 +25,7 @@ layout (location = 0) in vec3 iPosScale; // xy = Position, z = Scale
 layout (location = 1) in uint iColor;
 
 out vec2 BaseUV;
-out flat uint Color;
+flat out uint Color;
 
 void main() {
     int verId = gl_VertexID;
