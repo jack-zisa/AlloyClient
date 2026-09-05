@@ -93,7 +93,14 @@ public static class ConditionEffects {
         new("Armored", ConditionEffect.Armored, [16]),
         new("Armor Broken", ConditionEffect.ArmorBroken, [55]),
         new("Hexed", ConditionEffect.Hexed, [42]),
-        new("Ninja Speedy", ConditionEffect.NinjaSpeedy, [0])
+        new("Ninja Speedy", ConditionEffect.NinjaSpeedy, [0]),
+        new("Darkness", ConditionEffect.Darkness, [57]),
+        new("Unstable", ConditionEffect.Unstable, [56]),
+        new("Exposed", ConditionEffect.Exposed, [59]),
+        new("Energized", ConditionEffect.Energized, [60]),
+        new("Silenced", ConditionEffect.Silenced, [33]),
+        new("Curse", ConditionEffect.Curse, [58]),
+        new("Petrify", ConditionEffect.Petrify, null)
     ];
 
     public static Span<BucketType> IconlessEffects => new BucketType[MaxEffectBuckets];
