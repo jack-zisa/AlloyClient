@@ -33,6 +33,10 @@ public static class AppRequests {
             return new AppResponse { Success = false, Message = "Invalid account credentials." };
         }
 
+        if (response.Contains("Account In Use")) {
+            return new AppResponse { Success = false, Message = "Account In Use." };
+        }
+
         var xml = XElement.Parse(response);
         GlobalData.Add(new AccountData(xml));
         GlobalData.Add(new LoginData(username, password));
