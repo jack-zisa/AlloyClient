@@ -181,17 +181,16 @@ namespace AlloyClient.Game.Components.Hud.Inventory
 
                 AddChild(StatName);
 
-                SimpleText StatValue = new SimpleText(new TextConfig 
-                { 
-                    Text = IndexValue[i].ToString() + (extraInfo ? $" +{0}" : ""), 
-                    FontSize = 16, 
-                    FontType = FontType.Bold, 
-                    X = (even ? offset : Width - 16 - offset*2) + StatName.Width + 5, //kinda gross but its needed
-                    Y = y, 
-                    OutlineThickness = 0, 
-                    Color = 0xFFC800, 
-                    OutlineColor = 0xFFFFFF, 
-                    Anchor = UiAnchor.MiddleLeft 
+                SimpleText StatValue = new SimpleText(new TextConfig {
+                    Text = IndexValue[i] + (extraInfo ? $" +{0}" : ""), // TODO: Implement stat bonuses
+                    FontSize = 16,
+                    FontType = FontType.Bold,
+                    X = (even ? offset : Width - 16 - offset * 2) + StatName.Width + 5, //kinda gross but its needed
+                    Y = y,
+                    OutlineThickness = 0,
+                    Color = false ? 0xFFC800 : 0xFFFFFF,
+                    OutlineColor = 0xFFFFFF,
+                    Anchor = UiAnchor.MiddleLeft
                 });
 
                 AddChild(StatValue);
