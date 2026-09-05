@@ -4,8 +4,6 @@ using System.Linq;
 using AlloyClient.Assets.Libraries;
 using Alloy.UiLib.BuiltIn;
 using Alloy.UiLib.Core;
-using Alloy.Common;
-using AlloyClient.Ui.Components.Buttons;
 using OpenTK.Mathematics;
 
 namespace AlloyClient.Screens.Components.CharacterSelection;
@@ -45,18 +43,11 @@ public class CharacterWheel : Container {
 
         UpdateCharacterWheel(0);
         
-        var spincfg = new TextButtonConfig { Text = "Forward", FontSize = 50, OnClicked = RotateToNextCharacter, FontType = FontType.Normal, X = 75, Y = 485 };
-        var spinButton = new TextButton(spincfg);
-        AddChild(spinButton);
-        
-        var backcfg = new TextButtonConfig { Text = "Back", FontSize = 50, OnClicked = RotateToPreviousCharacter, FontType = FontType.Normal, X = 75, Y = 560 };
-        var spinBackButton = new TextButton(backcfg);
-        AddChild(spinBackButton);
         AddEventListener(Event.EnterFrame, OnFrameEnter);
     }
 
     private void UpdateCharacterWheel(float angle) {
-        var baseY = CenterY + 50f; 
+        var baseY = CenterY + 50f;
         var angleStep = MathF.Tau / ClassesLength;
         for (var i = 0; i < ClassesLength; i++) {
             _snapAngles.Add(_rotationAngle - i * angleStep); 
@@ -93,7 +84,7 @@ public class CharacterWheel : Container {
         }
     }
 
-    private void RotateToNextCharacter() {
+    public void RotateToNextCharacter() {
         CurrentCharacterIndex = (CurrentCharacterIndex + 1) % ClassesLength;
         _startRotationAngle = _rotationAngle;
         _targetRotationAngle = _snapAngles[CurrentCharacterIndex];
@@ -101,7 +92,7 @@ public class CharacterWheel : Container {
         _isAnimating = true;
     }
 
-    private void RotateToPreviousCharacter() {
+    public void RotateToPreviousCharacter() {
         CurrentCharacterIndex = (CurrentCharacterIndex - 1 + ClassesLength) % ClassesLength;
         _startRotationAngle = _rotationAngle;
         _targetRotationAngle = _snapAngles[CurrentCharacterIndex];
