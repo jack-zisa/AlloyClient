@@ -76,6 +76,7 @@ public class LoginContainer : Overlay {
             DialogManager.Enqueue(dialog);
             return;
         }
+        
         CloseOverlay();
         DispatchEvent(new Event(LoginEvent));
     }

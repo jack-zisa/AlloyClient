@@ -64,8 +64,6 @@ public partial class Sprite : DisplayContainer {
     public CollisionType CollisionType { get; private set; } = CollisionType.Square;
     
     public bool Visible = true;
-
-    public bool Focused = false;
     
     public bool MouseEnabled = false;
 

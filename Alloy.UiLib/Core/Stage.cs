@@ -34,6 +34,7 @@ public sealed class Stage : Sprite {
 
     internal Sprite CurrentHighestSprite;
     private Sprite _lastHighestSprite;
+    internal DisplayContainer CurrentFocused { get; set; }
 
     private Sprite _leftClickTarget;
     private Sprite _middleClickTarget;
@@ -114,7 +115,7 @@ public sealed class Stage : Sprite {
         switch (button) {
             case MouseButton.Button1 when _leftClickTarget == _lastHighestSprite:
                 if (TextInput.ActiveInput != null && _lastHighestSprite != TextInput.ActiveInput) {
-                    TextInput.ActiveInput.UnFocus();
+                    TextInput.ActiveInput.UnFocus(false);
                 }
                 DispatchMouseEvent(MouseEvent.LeftClick);
                 break;

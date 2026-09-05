@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Alloy.UiLib.Utils;
 using OpenTK.Mathematics;
-using Alloy.UiLib.BuiltIn;
 
 namespace Alloy.UiLib.Core;
 
@@ -25,26 +24,45 @@ public abstract class DisplayContainer : EventManager {
 
     internal int ContentHeight;
     
+    public bool Focused;
+    
     private readonly List<Sprite> _children = [];
 
     internal ReadOnlySpan<Sprite> GetChildrenSpan() {
         return CollectionsMarshal.AsSpan(_children);
     }
+
+    public virtual void Focus() {
+        Focused = true;
+        Stage.CurrentFocused = this;
+    }
+
+    public virtual void UnFocus(bool clear = false, bool children = true) {
+        Focused = false;
+        if (children) UnfocusChildren(clear);
+    }
+
+    public void UnfocusChildren(bool clear) {
+        for (var i = 0; i < NumChildren; i++) {
+            var child = GetChildAt(i);
+            child.UnFocus(clear);
+        }
+    }
     
-    public Sprite GetFocusedChild()
-    {
-        for (var i = 0; i < NumChildren; i++)
-        {
+    public DisplayContainer GetFocusedChild() {
+        if (Stage.CurrentFocused is { Focused: true })
+            return Stage.CurrentFocused;
+        
+        for (var i = 0; i < NumChildren; i++) {
             var child = GetChildAt(i);
 
             if (child.Focused)
-                return child;
+                return Stage.CurrentFocused = child;
 
-            if (child is DisplayContainer container)
-            {
+            if (child is DisplayContainer container) {
                 var focused = container.GetFocusedChild();
                 if (focused != null)
-                    return focused;
+                    return Stage.CurrentFocused = focused;
             }
         }
 
@@ -109,9 +127,9 @@ public abstract class DisplayContainer : EventManager {
             return child;
         
         DispatchEvent(new Event(Event.Removed));
-
+        
         if (Stage != null) {
-            //TODO[FOCUS]: clear focus if child matches
+            child.UnFocus(true, false);
 
             var evnt = new Event(Event.RemovedFromStage);
             child.DispatchEvent(evnt);

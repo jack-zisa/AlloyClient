@@ -64,6 +64,7 @@ public sealed class ScreenManager : Sprite {
     }
 
     private static void RemovePrevious() {
+        _prevScreen?.UnFocus(true);
         _prevScreen = _currScreen;
         _instance.RemoveChild(_currScreen);
     }

@@ -2,7 +2,6 @@
 using System.Text;
 using Alloy.UiLib.Core;
 using Alloy.UiLib.Data;
-using Alloy.UiLib.Input;
 using Alloy.UiLib.Rendering;
 using OpenTK.Mathematics;
 using OpenTK.Platform;
@@ -349,7 +348,7 @@ public sealed class TextInput : Sprite {
         return _inputText.Length > 0;
     }
 
-    public void Focus() {
+    public override void Focus() {
         if (ActiveInput != this) {
             ActiveInput?.UnFocus();
             ActiveInput = this;
@@ -358,7 +357,7 @@ public sealed class TextInput : Sprite {
         _isCaretActive = true;
         _caret.Visible = true;
         _caretIndex = -1;
-        Focused = true;
+        base.Focus();
         _onFocus?.Invoke();
 
         ClearIfDefault();
@@ -368,16 +367,15 @@ public sealed class TextInput : Sprite {
         FillData();
     }
 
-    public void UnFocus(bool clearText = false) {
+    public override void UnFocus(bool clear = false, bool children = false) {
         ActiveInput = null;
         _isCaretActive = false;
         _caretIndex = -1;
         _caret.Visible = false;
-        Focused = false;
+        base.UnFocus(clear, children);
         _onUnfocus?.Invoke();
-
-        if (clearText)
-            _inputText.Clear();
+        
+        if (clear) _inputText.Clear();
         
         if (_inputText.Length == 0) {
             SetDefault();
