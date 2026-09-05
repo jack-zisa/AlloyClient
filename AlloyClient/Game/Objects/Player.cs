@@ -62,8 +62,8 @@ public class Player : Entity {
     public int VitalityBoost;
     public int WisdomBoost;
     
-    public double AttackPeriod;
-    public double AttackStart;
+    new public double AttackPeriod;
+    new public double AttackStart;
 
     public int AccountId;
 

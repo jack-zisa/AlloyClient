@@ -60,7 +60,7 @@ public sealed class Main() : GameWindow(new Version(4, 6), ILogger.Factory) {
         Toolkit.Window.SetMode(Window, Settings.LastWindowMode);
         Toolkit.Window.SetMinClientSize(Window, 800, 600); // <-- Must be set after window state is loaded from settings
         #endregion
-        Toolkit.Window.SetTitle(Window, "RealmTk");
+        Toolkit.Window.SetTitle(Window, "Creo Realms");
             
         // Initial GL state
         Toolkit.Window.GetClientSize(Window, out var size);
