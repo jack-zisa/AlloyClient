@@ -116,6 +116,7 @@ public class OptionTabView : Container {
         _options.Add(new KeyMapperOption(Settings.ResetMScale, "Reset Map Scale", "Resets your map scale to default."));
         _options.Add(new KeyMapperOption(Settings.SetBagPriority, "Bag priority", "Toggle whether to make bags easier to interact with or not."));
         _options.Add(new KeyMapperOption(Settings.FullscreenKey, "Fullscreen", "Toggles fullscreen mode."));
+        _options.Add(new KeyMapperOption(Settings.DebugKey, "Debug", "Toggles debug overlay."));
     }
 
     private void AddChatOptions() {

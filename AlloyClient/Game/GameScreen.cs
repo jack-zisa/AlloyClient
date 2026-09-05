@@ -38,6 +38,8 @@ public sealed class GameScreen : Screen {
         AddChild(_hud = new HudView());
         AddChild(_chat= new ChatBox());
         AddChild(_debugStats = new DebugStats());
+
+        _debugStats.Visible = false; // Default to not visible, Press 'F3' to toggle
         
         GameSprite = this; // TODO: remove this ;-;
     }
@@ -56,7 +58,8 @@ public sealed class GameScreen : Screen {
         _chatLayer.Update(gameTime, _camera);
         _notificationLayer.Update(gameTime, _camera);
         _hud.Update();
-        _debugStats.Update(gameTime);
+        
+        if (_userInput._debug) _debugStats.Update(gameTime);
 
         _fixedUpdateElapsed += gameTime.ElapsedMs;
 
@@ -70,6 +73,8 @@ public sealed class GameScreen : Screen {
     }
 
     public override void Draw(GameTime gameTime) {
+        _debugStats.Visible = _userInput._debug;
+        
         Render.SetShaderParams(gameTime, _camera);
         Map.Draw(gameTime, _camera);
         MinimapTexture.PreDrawUpdate();

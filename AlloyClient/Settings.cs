@@ -94,6 +94,7 @@ public static class Settings {
     public static readonly InputSetting ResetMScale = new(Scancode.Unknown);
     public static readonly InputSetting SetBagPriority = new(Scancode.Unknown);
     public static readonly InputSetting FullscreenKey = new(Scancode.F11);
+    public static readonly InputSetting DebugKey = new(Scancode.F3);
     
     #endregion
     
