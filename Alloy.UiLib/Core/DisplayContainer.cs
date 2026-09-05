@@ -30,6 +30,26 @@ public abstract class DisplayContainer : EventManager {
     internal ReadOnlySpan<Sprite> GetChildrenSpan() {
         return CollectionsMarshal.AsSpan(_children);
     }
+    
+    public Sprite GetFocusedChild()
+    {
+        for (var i = 0; i < NumChildren; i++)
+        {
+            var child = GetChildAt(i);
+
+            if (child.Focused)
+                return child;
+
+            if (child is DisplayContainer container)
+            {
+                var focused = container.GetFocusedChild();
+                if (focused != null)
+                    return focused;
+            }
+        }
+
+        return null;
+    }
 
     public T AddChild<T>(T child) where T : Sprite => AddChildAt(child, _children.Count);
 

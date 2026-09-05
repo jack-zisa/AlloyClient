@@ -1,4 +1,5 @@
-﻿using Alloy.Engine;
+﻿using System;
+using Alloy.Engine;
 using Alloy.UiLib.BuiltIn;
 using Alloy.UiLib.Extra;
 using Alloy.UiLib.Input;
@@ -71,7 +72,8 @@ public sealed class Stage : Sprite {
     
     internal void SetKeyDown(Key key, Scancode scancode) {
         if (_keyboard.SetKeyDown(key)) {
-            DispatchEvent(new KeyboardEvent(KeyboardEvent.KeyDown, key, scancode, _keyboard.IsCtrlDown(), _keyboard.IsShiftDown(), _keyboard.IsAltDown()));
+            var target = GetFocusedChild() ?? this;
+            target.DispatchEvent(new KeyboardEvent(KeyboardEvent.KeyDown, key, scancode, _keyboard.IsCtrlDown(), _keyboard.IsShiftDown(), _keyboard.IsAltDown()));
         }
 
         if (_manualTextInput.OnManualTextInputDown(key, GameTime.TotalMs)) {
@@ -81,7 +83,8 @@ public sealed class Stage : Sprite {
 
     internal void SetKeyUp(Key key, Scancode scancode) {
         if (_keyboard.SetKeyUp(key)) {
-            DispatchEvent(new KeyboardEvent(KeyboardEvent.KeyUp, key, scancode, _keyboard.IsCtrlDown(), _keyboard.IsShiftDown(), _keyboard.IsAltDown()));
+            var target = GetFocusedChild() ?? this;
+            target.DispatchEvent(new KeyboardEvent(KeyboardEvent.KeyUp, key, scancode, _keyboard.IsCtrlDown(), _keyboard.IsShiftDown(), _keyboard.IsAltDown()));
         }
         
         _manualTextInput.OnManualTextInputUp(key);

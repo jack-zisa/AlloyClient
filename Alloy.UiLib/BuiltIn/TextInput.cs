@@ -27,6 +27,7 @@ public struct InputConfig {
     public UiAnchor Anchor = UiAnchor.LeftTop;
     
     public Action OnChange = null;
+    public Action<KeyboardEvent> OnKeyUp = null;
     
     public InputConfig() { }
 }
@@ -78,8 +79,14 @@ public sealed class TextInput : Sprite {
         _maxCharacters = config.MaxCharacters;
         _password = config.Password;
         _clickActivate = config.ClickToActivate;
-        _onFocus = config.OnFocus;
-        _onUnfocus = config.OnUnfocus;
+        _onFocus = () => {
+            Focused = true;
+            config.OnFocus?.Invoke();
+        };
+        _onUnfocus = () => {
+            Focused = false;
+            config.OnUnfocus?.Invoke();
+        };
         SetAnchor(config.Anchor);
 
         MouseEnabled = true;
@@ -102,6 +109,7 @@ public sealed class TextInput : Sprite {
         SetHitboxType(CollisionType.CustomNoScale);
         
         AddEventListener(MouseEvent.LeftClick, OnMouseClick);
+        AddEventListener(KeyboardEvent.KeyUp, config.OnKeyUp);
         
         ResizeBackBuffer();
         FillData();
@@ -350,6 +358,7 @@ public sealed class TextInput : Sprite {
         _isCaretActive = true;
         _caret.Visible = true;
         _caretIndex = -1;
+        Focused = true;
         _onFocus?.Invoke();
 
         ClearIfDefault();
@@ -364,6 +373,7 @@ public sealed class TextInput : Sprite {
         _isCaretActive = false;
         _caretIndex = -1;
         _caret.Visible = false;
+        Focused = false;
         _onUnfocus?.Invoke();
 
         if (clearText)
