@@ -100,7 +100,9 @@ public static class ConditionEffects {
         new("Energized", ConditionEffect.Energized, [60]),
         new("Silenced", ConditionEffect.Silenced, [33]),
         new("Curse", ConditionEffect.Curse, [58]),
-        new("Petrify", ConditionEffect.Petrify, null)
+        new("Petrify", ConditionEffect.Petrify, null),
+        new("Inspired", ConditionEffect.Inspired, [62]),
+        new("Drought", ConditionEffect.Drought, [64]),
     ];
 
     public static Span<BucketType> IconlessEffects => new BucketType[MaxEffectBuckets];
@@ -233,6 +235,7 @@ public enum ConditionEffect : EffectType {
     Inspired = 59,
     ManaDeplete = 60,
     SheatheStance = 61,
+    Drought = 62,
 
     ConditionEffectCount
 }
