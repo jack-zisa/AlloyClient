@@ -80,6 +80,30 @@
         <Size>80</Size>
         <SlotTypes>0, 0, 0, 0, 0, 0, 0, 0</SlotTypes>
     </Object>
+    <Object type="0x0512" id="Gold Loot Bag">
+        <Class>Container</Class>
+        <Container/>
+        <CanPutSoulboundObjects/>
+        <Loot/>
+        <Texture>
+            <File>lofiObj4</File>
+            <Index>0xda</Index>
+        </Texture>
+        <Size>80</Size>
+        <SlotTypes>0, 0, 0, 0, 0, 0, 0, 0</SlotTypes>
+    </Object>
+    <Object type="0x0513" id="Gold Loot Bag Boost">
+        <Class>Container</Class>
+        <Container/>
+        <CanPutSoulboundObjects/>
+        <Loot/>
+        <Texture>
+            <File>lofiObj4</File>
+            <Index>0xea</Index>
+        </Texture>
+        <Size>80</Size>
+        <SlotTypes>0, 0, 0, 0, 0, 0, 0, 0</SlotTypes>
+    </Object>
     <Object type="0x0500" id="Loot Bag 0">
         <Class>Container</Class>
         <Container/>
