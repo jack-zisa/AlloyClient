@@ -14,7 +14,6 @@ public static class DisplayManager {
             return;
         
         _stage = stage;
-        _stage.AddChild(ScreenManager.FadeScreen);
         _stage.AddChild(new ScreenManager());
         _stage.AddChild(new OverlayManager());
         _stage.AddChild(new DialogManager());
