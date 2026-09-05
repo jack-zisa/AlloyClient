@@ -78,7 +78,7 @@ public sealed class TypeGameObject : RenderBase {
 
         if (Entity.MaxHp != 0) {
             _hpBar.SetFill(1f * Entity.Hp / Entity.MaxHp);
-            _hpBar.Draw(y, targets, time);
+            //_hpBar.Draw(y, targets, time);
         }
         
         _effects.Draw(Entity.HeightOffset, targets, time);

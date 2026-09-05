@@ -277,9 +277,9 @@ public static class Map {
             type.DrawShadow();
         }
 
-        foreach (var projectile in Projectiles) {
+        /*foreach (var projectile in Projectiles) { // TODO: Option for projectile shadows
             Render.DrawShadow(projectile.DrawShadow());
-        }
+        }*/
 
         Render.EndShadowDraw();
 

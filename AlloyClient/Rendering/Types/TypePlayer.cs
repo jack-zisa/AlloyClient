@@ -88,9 +88,9 @@ public sealed class TypePlayer : RenderBase {
         }
         
         _hpBar.SetFill(1f * _player.Hp / _player.MaxHp);
-        _hpBar.Draw(y, targets, time);
+        //_hpBar.Draw(y, targets, time);
         y += _hpBar.Height;
-        _mpBar.Draw(y, targets, time);
+        //_mpBar.Draw(y, targets, time);
         
         _effects.Draw(Entity.HeightOffset, targets, time);
         

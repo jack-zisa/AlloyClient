@@ -318,8 +318,8 @@ public class Entity {
                     InventoryUpdate.Dispatch(index);
                     break;
                 case StatsType.Condition1: // TODO: implement same thing server side
-                    EffectBuckets.SetBucket(0, stat.Value);
-                    RenderBaseType.Extra.Alpha = HasConditionEffect(ConditionEffect.Invisible) ? 0.5f : 1;
+                    //EffectBuckets.SetBucket(0, stat.Value);
+                    //RenderBaseType.Extra.Alpha = HasConditionEffect(ConditionEffect.Invisible) ? 0.5f : 1;
                     break;
                 case StatsType.Name:
                     if (Name != stat.Text) {
