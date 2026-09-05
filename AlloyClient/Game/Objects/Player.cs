@@ -562,7 +562,7 @@ public class Player : Entity {
         RelativeMoveVector.X = relMoveVecX;
         RelativeMoveVector.Y = relMoveVecY;
 
-        if (false) {
+        if (EffectBuckets.HasConditionEffect(ConditionEffect.Confused)) {
             // Confused
             var temp = RelativeMoveVector.X;
             RelativeMoveVector.X = -RelativeMoveVector.Y;
@@ -572,7 +572,7 @@ public class Player : Entity {
     }
 
     private float GetMoveSpeed() {
-        if (false) {
+        if (EffectBuckets.HasConditionEffect(ConditionEffect.Slowed)) {
             // Slowed
             return MinMoveSpeed * MovementMultiplier;
         }
@@ -580,7 +580,7 @@ public class Player : Entity {
         var speed = Focused ? FocusedSpeed : Speed;
         var moveSpeed = MinMoveSpeed + speed / 75 * (MaxMoveSpeed - MinMoveSpeed);
 
-        if (false || false) {
+        if (EffectBuckets.HasConditionEffect(ConditionEffect.Speedy) || EffectBuckets.HasConditionEffect(ConditionEffect.NinjaSpeedy)) {
             // Speedy or NinjaSpeedy
             moveSpeed *= 1.5f;
         }
