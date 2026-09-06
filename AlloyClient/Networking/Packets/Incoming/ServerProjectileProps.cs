@@ -8,8 +8,8 @@ namespace AlloyClient.Networking.Packets.Incoming;
 
 public class ServerProjectileProps : IncomingPacket<ServerProjectileProps> {
     
-    private static int TotalBytes = 0; 
-    private static int TotalCount = 0; 
+    private static int TotalBytes = 0;
+    private static int TotalCount = 0;
     
     public ushort ContainerType;
     public byte ProjId;

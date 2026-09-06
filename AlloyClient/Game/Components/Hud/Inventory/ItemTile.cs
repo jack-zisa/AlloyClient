@@ -294,7 +294,7 @@ public sealed class ItemTile : Sprite {
 
         switch (target) {
             case ItemTile tile:
-                Console.WriteLine($"{!tile.Interactive} {tile.OneWay} {!CanSwapItems(this, tile)}");
+                //Console.WriteLine($"{!tile.Interactive} {tile.OneWay} {!CanSwapItems(this, tile)}");
                 if (!tile.Interactive) break;
                 if (tile.OneWay) break;
                 if (!CanSwapItems(this, tile)) break;
