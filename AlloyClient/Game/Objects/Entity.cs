@@ -260,6 +260,10 @@ public class Entity {
         return true;
     }
 
+    public bool IsMoving() {
+        return MovementVector.X != 0f && MovementVector.Y != 0f;
+    }
+
     public void OnTickPosition(float x, float y, double tickTime, int tickId, bool isPlayer) {
         if (!Settings.MovementInterpolation && LastTickId < Map.LastTickId && !isPlayer) {
             MoveTo(TickPosition.X, TickPosition.Y);
