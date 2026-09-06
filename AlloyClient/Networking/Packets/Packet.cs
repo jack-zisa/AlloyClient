@@ -92,6 +92,7 @@ public static class PacketUtils {
             PacketId.TradeStart => TradeStart.CreatePacket(),
             PacketId.Update => Update.CreatePacket(),
             PacketId.InvUpdate => InvUpdate.CreatePacket(),
+            PacketId.ConditionEffect => ConditionEffect.CreatePacket(),
             PacketId.ServerProjectileProps => ServerProjectileProps.CreatePacket(),
             _ => throw new ArgumentException($"Unsupported packet ID: {packetId}")
         };

@@ -19,7 +19,7 @@ public class ServerProjectileProps : IncomingPacket<ServerProjectileProps> {
     public bool PassesCover;
     public bool ArmorPiercing;
     public int Size;
-    public (ConditionEffect, int)[] Effects;
+    public (Game.ConditionEffect, int)[] Effects;
 
     public override PacketId PacketId => PacketId.ServerProjectileProps;
 
@@ -45,9 +45,9 @@ public class ServerProjectileProps : IncomingPacket<ServerProjectileProps> {
         PassesCover = reader.ReadBoolean();
         ArmorPiercing = reader.ReadBoolean();
         Size = reader.ReadInt32();
-        Effects = new (ConditionEffect, int)[reader.ReadUInt16()];
+        Effects = new (Game.ConditionEffect, int)[reader.ReadUInt16()];
         for (var i = 0; i < Effects.Length; i++)
-            Effects[i] = ((ConditionEffect)reader.ReadUInt16(), reader.ReadInt32());
+            Effects[i] = ((Game.ConditionEffect)reader.ReadUInt16(), reader.ReadInt32());
 
         var bytes = reader.Position - start;
         Interlocked.Add(ref TotalBytes, bytes);

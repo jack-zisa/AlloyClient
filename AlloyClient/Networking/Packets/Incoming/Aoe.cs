@@ -7,7 +7,7 @@ public class Aoe : IncomingPacket<Aoe> {
     public Position Pos;
     public float Radius;
     public ushort Damage;
-    public ConditionEffect Effect;
+    public Game.ConditionEffect Effect;
     public float Duration;
     public ushort OrigType;
 
@@ -26,7 +26,7 @@ public class Aoe : IncomingPacket<Aoe> {
         Pos.Read(ref reader);
         Radius = reader.ReadSingle();
         Damage = reader.ReadUInt16();
-        Effect = (ConditionEffect)reader.ReadByte();
+        Effect = (Game.ConditionEffect)reader.ReadByte();
         Duration = reader.ReadSingle();
         OrigType = reader.ReadUInt16();
     }

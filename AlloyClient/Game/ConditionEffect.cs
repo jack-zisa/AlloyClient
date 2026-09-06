@@ -43,14 +43,27 @@ public unsafe struct ConditionEffectBucket {
 
     public void SetBucket(int bucketId, int bucketValue) {
         _buckets[bucketId] = bucketValue;
-        
-        var count = 0;
+        UpdateTotalIcons();
+    }
+    
+    public void AddConditionEffect(ConditionEffect effect) {
+        var effectId = (EffectType) effect;
+        _buckets[effectId / ConditionEffects.MaxBucketSize] |= 1 << effectId % ConditionEffects.MaxBucketSize;
+        UpdateTotalIcons();
+    }
 
+    public void RemoveConditionEffect(ConditionEffect effect) {
+        var effectId = (EffectType)effect;
+        _buckets[effectId / ConditionEffects.MaxBucketSize] &= ~(1 << effectId % ConditionEffects.MaxBucketSize);
+        UpdateTotalIcons();
+    }
+    
+    private void UpdateTotalIcons() {
+        var count = 0;
         for (var i = 0; i < ConditionEffects.MaxEffectBuckets; i++) {
             count += System.Numerics.BitOperations.PopCount((uint)(_buckets[i] & ~ConditionEffects.IconlessEffects[i]));
         }
-
-        TotalIcons =  count;
+        TotalIcons = count;
     }
 }
 

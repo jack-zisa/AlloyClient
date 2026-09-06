@@ -69,6 +69,7 @@ public enum PacketId : byte
     GemstoneSwap = 64,
     PartyInvite = 65,
     InvUpdate = 66,
+    ConditionEffect = 67,
     
     Unknown = 255
 }
