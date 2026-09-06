@@ -53,9 +53,9 @@ public sealed class EquippedGrid : Sprite {
             return;
 
         var noMana = Map.LocalPlayer.Mp < slot.ItemDesc.MpCost;
-        //todo: silence check
+        var silenced = Map.LocalPlayer.HasConditionEffect(ConditionEffect.Silenced);
         
-        slot.SetDim(noMana);
+        slot.SetDim(noMana || silenced);
     }
 
     private void OnInventoryChange(int slot) {
