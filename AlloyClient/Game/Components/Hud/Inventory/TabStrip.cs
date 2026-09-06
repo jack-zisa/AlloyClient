@@ -2,6 +2,7 @@
 using AlloyClient.Game.Objects;
 using Alloy.UiLib.BuiltIn;
 using Alloy.UiLib.Core;
+using AlloyClient.Assets.XmlStructs;
 using AlloyClient.Ui.Components.Buttons;
 using AlloyClient.Utils;
 
@@ -150,48 +151,48 @@ namespace AlloyClient.Game.Components.Hud.Inventory
     {
         public StatsPanel()
         {
-            var p = Map.LocalPlayer;
+            var player = Map.LocalPlayer;
+            var playerProperties = player.Properties.PlayerProperties;
             int y = 150/2 - 16 - 10; //Height - Size - Spacing 
             int offset = 40;
             var bg = new CutEdgeRect(new CutEdgeConfig { Width = 224, Height = 150, CutX = 6, CutY = 6, Cuts = CutEdges.All, Color = 0x242222 });
             AddChild(bg);
 
             string[] IndexName = { "ATK" , "DEF", "SPD", "DEX" , "VIT" , "WIS"};
-            int[] IndexValue = { p.Attack, p.Defense, p.Speed, p.Dexterity, p.Vitality, p.Wisdom};
-
-
-            for (int i = 0; i < IndexValue.Length; i++) 
-            {
-                bool even = (i == 0 || i == 2 || i == 4);
+            int[] IndexValue = { player.Attack, player.Defense, player.Speed, player.Dexterity, player.Vitality, player.Wisdom};
+            int[] IndexMaxValue = { playerProperties.MaxAttack, playerProperties.MaxDefense, playerProperties.MaxSpeed, playerProperties.MaxDexterity, playerProperties.MaxVitality, playerProperties.MaxWisdom};
+            
+            for (int i = 0; i < IndexValue.Length; i++) {
+                var value = IndexValue[i];
+                bool maxed = value >= IndexMaxValue[i];
+                bool even = i % 2 == 0;
                 bool extraInfo = false;
 
-                SimpleText StatName = new SimpleText(new TextConfig 
-                { 
-                    Text = IndexName[i], 
-                    FontSize = 16, 
-                    FontType = FontType.Normal, 
-                    X = even ? offset : Width - 16 - offset*2, 
-                    Y = y, 
-                    OutlineThickness = 0, 
-                    Color = 0xFFFFFF, 
-                    OutlineColor = 0xFFFFFF, 
+                SimpleText StatName = new SimpleText(new TextConfig {
+                    Text = IndexName[i],
+                    FontSize = 16,
+                    FontType = FontType.Normal,
+                    X = even ? offset : Width - 16 - offset*2,
+                    Y = y,
+                    OutlineThickness = 0,
+                    Color = 0xFFFFFF,
+                    OutlineColor = 0xFFFFFF,
                     Anchor = UiAnchor.
-                    MiddleLeft 
+                    MiddleLeft
                 });
 
                 AddChild(StatName);
 
-                SimpleText StatValue = new SimpleText(new TextConfig 
-                { 
-                    Text = IndexValue[i].ToString() + (extraInfo ? $" +{0}" : ""), 
-                    FontSize = 16, 
-                    FontType = FontType.Bold, 
-                    X = (even ? offset : Width - 16 - offset*2) + StatName.Width + 5, //kinda gross but its needed
-                    Y = y, 
-                    OutlineThickness = 0, 
-                    Color = 0xFFC800, 
-                    OutlineColor = 0xFFFFFF, 
-                    Anchor = UiAnchor.MiddleLeft 
+                SimpleText StatValue = new SimpleText(new TextConfig {
+                    Text = value + (extraInfo ? $" +{0}" : ""), // TODO: Implement stat bonuses
+                    FontSize = 16,
+                    FontType = FontType.Bold,
+                    X = (even ? offset : Width - 16 - offset * 2) + StatName.Width + 5, //kinda gross but its needed
+                    Y = y,
+                    OutlineThickness = 0,
+                    Color = maxed ? 0xFFC800u : 0xFFFFFF,
+                    OutlineColor = maxed ? 0xFFC800u : 0xFFFFFF,
+                    Anchor = UiAnchor.MiddleLeft
                 });
 
                 AddChild(StatValue);
