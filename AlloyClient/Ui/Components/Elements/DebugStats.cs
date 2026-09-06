@@ -6,6 +6,8 @@ using AlloyClient.Rendering;
 using Alloy.UiLib;
 using Alloy.UiLib.BuiltIn;
 using Alloy.UiLib.Core;
+using AlloyClient.Game;
+using AlloyClient.Game.Objects;
 
 namespace AlloyClient.Ui.Components.Elements;
 
@@ -119,6 +121,7 @@ public class DebugStats : Sprite {
         var p90FrameTime = data[(int) (count * 0.90f)];
         var p99FrameTime = data[(int) (count * 0.99f)];
         var maxFrameTime = data[count - 1];
+        var player = Map.LocalPlayer;
         
         _statisticsTimer = 0;
         _frameCount = 0;
@@ -139,6 +142,6 @@ public class DebugStats : Sprite {
         _entities.SetText($"Entities: {Render.LastDrawCountEntities}");
         _particles.SetText($"Particles: {Render.LastDrawParticleCount}");
         _ui.SetText($"Ui: {UiRender.LastRenderCount}");
-        _pos.SetText($"Pos: {0}");
+        _pos.SetText($"Pos: {player.X}, {player.Y}");
     }
 }
