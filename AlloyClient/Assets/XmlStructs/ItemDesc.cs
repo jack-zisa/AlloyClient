@@ -62,8 +62,7 @@ public class ItemDesc {
         Usable = xml.HasElement("Usable");
         Resurrects = xml.HasElement("Resurrects");
         RateOfFire = xml.GetValue<float>("RateOfFire", 1f);
-        if (xml.HasElement("Tier"))
-            Tier = xml.GetValue<int>("Tier", -1);
+        Tier = xml.GetValue<int>("Tier", -1);
         BagType = xml.GetValue<int>("BagType");
         FameBonus = xml.GetValue<int>("FameBonus");
         NumProjectiles = xml.GetValue<int>("NumProjectiles", 1);
