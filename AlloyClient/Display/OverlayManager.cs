@@ -1,4 +1,5 @@
-﻿using AlloyClient.Ui.Components.Panels;
+﻿using System;
+using AlloyClient.Ui.Components.Panels;
 using Alloy.UiLib.BuiltIn;
 using Alloy.UiLib.Core;
 using AlloyClient.Utils;
@@ -21,7 +22,9 @@ public sealed class OverlayManager : Sprite {
 
     public static void Set(Overlay sprite) => Instance.PrivateSet(sprite);
     
-    public static void Clear() => Instance.PrivateClear();
+    public static void Clear() { 
+        Instance.PrivateClear();
+    }
 
     private void PrivateSet(Overlay sprite) {
         if (_current is null) {
@@ -31,6 +34,7 @@ public sealed class OverlayManager : Sprite {
             AddChild(_current = sprite);
             _current.AddAlphaTween(0f, 1f, 250);
         } else {
+            _current.UnFocus(true);
             _current.AddAlphaTween(1f, 0f, 150, onFinish: () => {
                 RemoveChild(_current);
                 AddChild(_current = sprite);
@@ -40,6 +44,7 @@ public sealed class OverlayManager : Sprite {
     }
 
     private void PrivateClear() {
+        _current.UnFocus();
         Overlay.AddAlphaTween(0.8f, 0f, 250, onFinish: () => { RemoveChild(Overlay);});
         _current.AddAlphaTween(1f, 0f, 175, onFinish: () => { RemoveChild(_current); _current = null; });
     }

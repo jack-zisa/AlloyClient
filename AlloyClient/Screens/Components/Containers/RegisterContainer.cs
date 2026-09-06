@@ -1,3 +1,4 @@
+using System;
 using AlloyClient.AppEngine;
 using AlloyClient.Display;
 using AlloyClient.Ui.Components.Dialogs;
@@ -6,6 +7,7 @@ using Alloy.UiLib.BuiltIn;
 using Alloy.UiLib.Core;
 using Alloy.UiLib.Extra;
 using AlloyClient.Ui.Components.Buttons;
+using OpenTK.Platform;
 
 namespace AlloyClient.Screens.Components.Containers;
 
@@ -28,12 +30,25 @@ public class RegisterContainer : Overlay {
         var title = new SimpleText(new TextConfig { Text = "Register", FontSize = 22, FontType = FontType.Bold, X = Width / 2, Y = titleBackground.Height / 2, Color = 0xFFFFFF, Anchor = UiAnchor.Middle });
         AddChild(title);
         
-        
-        var emailConfig = new InputConfig { X = Width / 2, Y = 100, FontSize = 24, FontType = FontType.Bold, Color = 0xFFFFFF, Width = 350, DefaultText = "Username", Anchor = UiAnchor.Middle };
+        var emailConfig = new InputConfig { X = Width / 2, Y = 100, FontSize = 24, FontType = FontType.Bold, Color = 0xFFFFFF, Width = 350, DefaultText = "Username", Anchor = UiAnchor.Middle, OnKeyUp =
+            @event => {
+                if (@event.Key == Key.Tab && _usernameInput != null && _passwordInput != null) {
+                    _passwordInput.UnFocus();
+                    _usernameInput.Focus();
+                }
+            }
+        };
         _usernameInput = new TextInput(emailConfig);
         AddChild(_usernameInput);
 
-        var passwordConfig = new InputConfig { X = Width / 2, Y = 160, FontSize = 24, FontType = FontType.Bold, Color = 0xFFFFFF, Width = 350, DefaultText = "Password", Password = true, Anchor = UiAnchor.Middle };
+        var passwordConfig = new InputConfig { X = Width / 2, Y = 160, FontSize = 24, FontType = FontType.Bold, Color = 0xFFFFFF, Width = 350, DefaultText = "Password", Password = true, Anchor = UiAnchor.Middle, OnKeyUp =
+            @event => {
+                if (@event.Key == Key.Tab && _usernameInput != null && _passwordInput != null) {
+                    _passwordInput.UnFocus();
+                    _usernameInput.Focus();
+                }
+            }
+        };
         _passwordInput = new TextInput(passwordConfig);
         AddChild(_passwordInput);
         
@@ -60,7 +75,6 @@ public class RegisterContainer : Overlay {
             DialogManager.Enqueue(dialog);
             return;
         }
-        
         
         CloseOverlay();
         ScreenManager.FadeToScreen(new TitleScreen(), Easing.SineInOut, 500, 0x0);

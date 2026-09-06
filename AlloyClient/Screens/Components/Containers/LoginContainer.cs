@@ -1,3 +1,4 @@
+using System;
 using AlloyClient.AppEngine;
 using AlloyClient.Display;
 using AlloyClient.Ui.Components.Dialogs;
@@ -5,6 +6,7 @@ using AlloyClient.Ui.Components.Panels;
 using Alloy.UiLib.BuiltIn;
 using Alloy.UiLib.Core;
 using AlloyClient.Ui.Components.Buttons;
+using OpenTK.Platform;
 
 namespace AlloyClient.Screens.Components.Containers;
 
@@ -26,14 +28,28 @@ public class LoginContainer : Overlay {
         var titleBackground = new ColorRect(new ColorRectConfig { Width = 475, Height = 50, Color = 0x4d4d4d });
         AddChild(titleBackground);
 
-        var title = new SimpleText(new TextConfig { Text = "Log in", FontSize = 22, FontType = FontType.Bold, X = Width / 2, Y = titleBackground.Height / 2, Color = 0xFFFFFF, Anchor = UiAnchor.Middle });
+        var title = new SimpleText(new TextConfig { Text = "Log in", FontSize = 22, FontType = FontType.Bold, X = Width / 2, Y = titleBackground.Height / 2, Color = 0xFFFFFF, Anchor = UiAnchor.Middle});
         AddChild(title);
 
-        var emailConfig = new InputConfig { X = Width / 2, Y = 100, FontSize = 24, FontType = FontType.Bold, Color = 0xFFFFFF, Width = 350, DefaultText = "Username", Anchor = UiAnchor.Middle };
+        var emailConfig = new InputConfig { X = Width / 2, Y = 100, FontSize = 24, FontType = FontType.Bold, Color = 0xFFFFFF, Width = 350, DefaultText = "Username", Anchor = UiAnchor.Middle, OnKeyUp =
+            @event => {
+                if (@event.Key == Key.Tab && _emailInput != null && _passwordInput != null) {
+                    _emailInput.UnFocus();
+                    _passwordInput.Focus();
+                }
+            }
+        };
         _emailInput = new TextInput(emailConfig);
         AddChild(_emailInput);
 
-        var passwordConfig = new InputConfig { X = Width / 2, Y = 160, FontSize = 24, FontType = FontType.Bold, Color = 0xFFFFFF, Width = 350, DefaultText = "Password", Password = true, Anchor = UiAnchor.Middle };
+        var passwordConfig = new InputConfig { X = Width / 2, Y = 160, FontSize = 24, FontType = FontType.Bold, Color = 0xFFFFFF, Width = 350, DefaultText = "Password", Password = true, Anchor = UiAnchor.Middle, OnKeyUp =
+            @event => {
+                if (@event.Key == Key.Tab && _emailInput != null && _passwordInput != null) {
+                    _passwordInput.UnFocus();
+                    _emailInput.Focus();
+                }
+            }
+        };
         _passwordInput = new TextInput(passwordConfig);
         AddChild(_passwordInput);
 
@@ -60,6 +76,7 @@ public class LoginContainer : Overlay {
             DialogManager.Enqueue(dialog);
             return;
         }
+        
         CloseOverlay();
         DispatchEvent(new Event(LoginEvent));
     }

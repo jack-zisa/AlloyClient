@@ -26,7 +26,6 @@ public class ChatBox : Sprite {
 
     private readonly Container _chatContainer;
     private readonly TextInput _chatInput;
-    private bool _inFocus;
     private string _recentTeller = string.Empty;
     
     
@@ -128,7 +127,7 @@ public class ChatBox : Sprite {
     }
 
     private void HandleChatKey() {
-        if (_inFocus) {
+        if (Focused) {
             var hasText = _chatInput.HasText(true);
             if (hasText) {
                 var textPacket = PlayerText.CreatePacket();
@@ -167,19 +166,18 @@ public class ChatBox : Sprite {
         if (clear || !_chatInput.HasText(false)) {
             RemoveChild(_chatInput);
         }
-        _chatInput.UnFocus(clear);
     }
 
     private void FocusTextInput() {
         UserInput.SetManualFocus(false);
         Stage.AddEventListener(KeyboardEvent.KeyDown, OnKeyDown);
-        _inFocus = true;
+        Focus();
     }
 
     private void UnfocusTextInput() {
         UserInput.SetManualFocus(true);
         Stage.RemoveEventListener(KeyboardEvent.KeyDown, OnKeyDown);
-        _inFocus = false;
+        UnFocus(false, false);
     }
     
     private void OnKeyDown(KeyboardEvent args) {

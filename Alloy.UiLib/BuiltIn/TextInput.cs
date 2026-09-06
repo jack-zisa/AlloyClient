@@ -2,7 +2,6 @@
 using System.Text;
 using Alloy.UiLib.Core;
 using Alloy.UiLib.Data;
-using Alloy.UiLib.Input;
 using Alloy.UiLib.Rendering;
 using OpenTK.Mathematics;
 using OpenTK.Platform;
@@ -27,6 +26,7 @@ public struct InputConfig {
     public UiAnchor Anchor = UiAnchor.LeftTop;
     
     public Action OnChange = null;
+    public Action<KeyboardEvent> OnKeyUp = null;
     
     public InputConfig() { }
 }
@@ -78,8 +78,14 @@ public sealed class TextInput : Sprite {
         _maxCharacters = config.MaxCharacters;
         _password = config.Password;
         _clickActivate = config.ClickToActivate;
-        _onFocus = config.OnFocus;
-        _onUnfocus = config.OnUnfocus;
+        _onFocus = () => {
+            Focused = true;
+            config.OnFocus?.Invoke();
+        };
+        _onUnfocus = () => {
+            Focused = false;
+            config.OnUnfocus?.Invoke();
+        };
         SetAnchor(config.Anchor);
 
         MouseEnabled = true;
@@ -102,6 +108,7 @@ public sealed class TextInput : Sprite {
         SetHitboxType(CollisionType.CustomNoScale);
         
         AddEventListener(MouseEvent.LeftClick, OnMouseClick);
+        AddEventListener(KeyboardEvent.KeyUp, config.OnKeyUp);
         
         ResizeBackBuffer();
         FillData();
@@ -341,7 +348,7 @@ public sealed class TextInput : Sprite {
         return _inputText.Length > 0;
     }
 
-    public void Focus() {
+    public override void Focus() {
         if (ActiveInput != this) {
             ActiveInput?.UnFocus();
             ActiveInput = this;
@@ -350,6 +357,7 @@ public sealed class TextInput : Sprite {
         _isCaretActive = true;
         _caret.Visible = true;
         _caretIndex = -1;
+        base.Focus();
         _onFocus?.Invoke();
 
         ClearIfDefault();
@@ -359,15 +367,15 @@ public sealed class TextInput : Sprite {
         FillData();
     }
 
-    public void UnFocus(bool clearText = false) {
+    public override void UnFocus(bool clear = false, bool children = false) {
         ActiveInput = null;
         _isCaretActive = false;
         _caretIndex = -1;
         _caret.Visible = false;
+        base.UnFocus(clear, children);
         _onUnfocus?.Invoke();
-
-        if (clearText)
-            _inputText.Clear();
+        
+        if (clear) _inputText.Clear();
         
         if (_inputText.Length == 0) {
             SetDefault();

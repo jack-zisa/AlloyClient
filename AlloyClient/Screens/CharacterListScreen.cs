@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using AlloyClient.AppEngine;
 using AlloyClient.Data;
@@ -11,8 +12,10 @@ using AlloyClient.Ui.Components.Scrollbars;
 using Alloy.UiLib.BuiltIn;
 using Alloy.UiLib.Core;
 using Alloy.UiLib.Extra;
+using AlloyClient.Screens.Components.CharacterSelection;
 using AlloyClient.Ui.Components.Dialogs;
 using AlloyClient.Ui.Components.Graphics;
+using AlloyClient.Ui.Components.Panels;
 using AlloyClient.Utils;
 
 namespace AlloyClient.Screens;
@@ -31,6 +34,8 @@ public class CharacterListScreen : TitleScreenBase {
     
     private readonly List<CharacterRect> _characterListRects = [];
     private CharacterRect _newCharacterRect;
+
+    private ClassContainer _characterCreate;
     
     private List<CharacterRect> _graveyardCharacterRects = [];
     
@@ -165,6 +170,19 @@ public class CharacterListScreen : TitleScreenBase {
             Width = Settings.DefaultScreenWidth,
             Height = containerHeight,
             EnableClip = true
+        });
+        _scrollContainer.AddEventListener(MouseEvent.ScrollVertical, @event => {
+            var wheel = _characterCreate?.CharacterWheel;
+            if (wheel == null) return;
+            
+            switch (@event.VerticalDelta) {
+                case < 0:
+                    wheel.RotateToPreviousCharacter();
+                    break;
+                case > 0:
+                    wheel.RotateToNextCharacter();
+                    break;
+            }
         });
         AddChild(_scrollContainer);
 
@@ -304,7 +322,8 @@ public class CharacterListScreen : TitleScreenBase {
     }
 
     public void ShowCharacterCreate() {
-        OverlayManager.Set(new ClassContainer());
+        OverlayManager.Set(_characterCreate = new ClassContainer());
+        _characterCreate.Focus();
     }
     
     public void HideCharacterCreate() {
