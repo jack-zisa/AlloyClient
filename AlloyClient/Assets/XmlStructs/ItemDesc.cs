@@ -40,6 +40,7 @@ public class ItemDesc {
     public readonly bool XpBoost;
     public readonly float Timer;
     public readonly int MpEndCost;
+    public readonly ushort SetType;
 
     public readonly StatBoostDesc[] StatBoosts;
     public readonly ActivateEffectDesc[] ActivateEffects;
@@ -62,7 +63,7 @@ public class ItemDesc {
         Resurrects = xml.HasElement("Resurrects");
         RateOfFire = xml.GetValue<float>("RateOfFire", 1f);
         if (xml.HasElement("Tier"))
-            Tier = xml.GetValue<int>("Tier");
+            Tier = xml.GetValue<int>("Tier", -1);
         BagType = xml.GetValue<int>("BagType");
         FameBonus = xml.GetValue<int>("FameBonus");
         NumProjectiles = xml.GetValue<int>("NumProjectiles", 1);
@@ -78,6 +79,7 @@ public class ItemDesc {
         Timer = xml.GetValue<float>("Timer");
         MpEndCost = xml.GetValue<int>("MpEndCost", 0);
         InvUse = xml.HasElement("InvUse");
+        SetType = xml.GetAttribute<ushort>("setType");
         TypeOfConsumable = InvUse || Consumable;
 
         StatBoosts = xml.Elements("ActivateOnEquip").Select(i => new StatBoostDesc(i)).ToArray();

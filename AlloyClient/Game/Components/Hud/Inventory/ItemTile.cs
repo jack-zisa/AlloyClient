@@ -148,11 +148,10 @@ public sealed class ItemTile : Sprite {
             tag = "UT";
         }
 
-        //todo: item set
-        /*if (Item.Set) {
+        if (ItemDesc.SetType > 0) {
             color = 0xFF9900;
             tag = "ST";
-        }*/
+        }
 
 
         _tierText.SetText(tag);
