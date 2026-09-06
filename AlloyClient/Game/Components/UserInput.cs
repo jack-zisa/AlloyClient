@@ -38,6 +38,8 @@ public sealed class UserInput : Sprite {
     private int _moveDown;
     private int _moveUp;
 
+    public bool _debug { get; private set; }
+    
     public UserInput() {
         AddEventListener(Event.AddedToStage, AddedToStage);
         AddEventListener(Event.RemovedFromStage, RemovedFromStage);
@@ -272,6 +274,9 @@ public sealed class UserInput : Sprite {
                 break;
             case true when Settings.Special.Equals(key):
                 //TODO: abilities
+                break;
+            case true when Settings.DebugKey.Equals(key):
+                _debug = !_debug;
                 break;
         }
         

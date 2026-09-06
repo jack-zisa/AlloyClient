@@ -6,6 +6,8 @@ using AlloyClient.Rendering;
 using Alloy.UiLib;
 using Alloy.UiLib.BuiltIn;
 using Alloy.UiLib.Core;
+using AlloyClient.Game;
+using AlloyClient.Game.Objects;
 
 namespace AlloyClient.Ui.Components.Elements;
 
@@ -40,6 +42,7 @@ public class DebugStats : Sprite {
     private readonly SimpleText _entities = new (new TextConfig {Text = "Entities: 0", X = 2, FontSize = 16, FontType = FontType.Bold, OutlineThickness = Outline, Anchor = UiAnchor.LeftTop });
     private readonly SimpleText _particles = new (new TextConfig {Text = "Particles: 0", X = 2, FontSize = 16, FontType = FontType.Bold, OutlineThickness = Outline, Anchor = UiAnchor.LeftTop });
     private readonly SimpleText _ui = new(new TextConfig {Text = "Ui: 0", X = 2, FontSize = 16, FontType = FontType.Bold, OutlineThickness = Outline, Anchor = UiAnchor.LeftTop});
+    private readonly SimpleText _pos = new(new TextConfig {Text = "Pos: 0", X = 2, FontSize = 16, FontType = FontType.Bold, OutlineThickness = Outline, Anchor = UiAnchor.LeftTop});
     
     private long _lastGcBytes;
     
@@ -60,6 +63,7 @@ public class DebugStats : Sprite {
         AddChild(_entities);
         AddChild(_particles);
         AddChild(_ui);
+        AddChild(_pos);
         
         _fps.Y = 4;
         _frameTimeTimer.Y = _fps.Y + _fps.Height + 4;
@@ -77,6 +81,7 @@ public class DebugStats : Sprite {
         _entities.Y = _shadows.Y + _shadows.Height + 4;
         _particles.Y = _entities.Y + _entities.Height + 4;
         _ui.Y = _particles.Y + _particles.Height + 4;
+        _pos.Y = _ui.Y + _ui.Height + 4;
     }
 
     public void Update(GameTime gameTime) {
@@ -116,6 +121,7 @@ public class DebugStats : Sprite {
         var p90FrameTime = data[(int) (count * 0.90f)];
         var p99FrameTime = data[(int) (count * 0.99f)];
         var maxFrameTime = data[count - 1];
+        var player = Map.LocalPlayer;
         
         _statisticsTimer = 0;
         _frameCount = 0;
@@ -136,5 +142,6 @@ public class DebugStats : Sprite {
         _entities.SetText($"Entities: {Render.LastDrawCountEntities}");
         _particles.SetText($"Particles: {Render.LastDrawParticleCount}");
         _ui.SetText($"Ui: {UiRender.LastRenderCount}");
+        _pos.SetText($"Pos: {player.X}, {player.Y}");
     }
 }
