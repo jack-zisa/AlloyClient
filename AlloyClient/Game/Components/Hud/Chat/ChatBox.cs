@@ -177,7 +177,7 @@ public class ChatBox : Sprite {
     private void UnfocusTextInput() {
         UserInput.SetManualFocus(true);
         Stage.RemoveEventListener(KeyboardEvent.KeyDown, OnKeyDown);
-        UnFocus();
+        UnFocus(false, false);
     }
     
     private void OnKeyDown(KeyboardEvent args) {
