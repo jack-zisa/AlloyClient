@@ -220,7 +220,7 @@ public sealed class UserInput : Sprite {
                 break;
             case true when Settings.ChatCommand.Equals(key):
                 ClearMovement();
-                ChatBox.OnChatOpen.Dispatch("/");
+                ChatBox.OnChatOpen.Dispatch("");
                 break;
             case true when Settings.TellKey.Equals(key):
                 ClearMovement();
