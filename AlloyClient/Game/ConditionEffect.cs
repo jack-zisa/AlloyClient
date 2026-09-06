@@ -103,6 +103,7 @@ public static class ConditionEffects {
         new("Petrify", ConditionEffect.Petrify, null),
         new("Inspired", ConditionEffect.Inspired, [62]),
         new("Drought", ConditionEffect.Drought, [64]),
+        new("Lucky", ConditionEffect.Lucky, [65]),
     ];
 
     public static Span<BucketType> IconlessEffects => new BucketType[MaxEffectBuckets];
@@ -236,6 +237,7 @@ public enum ConditionEffect : EffectType {
     ManaDeplete = 60,
     SheatheStance = 61,
     Drought = 62,
+    Lucky = 63,
 
     ConditionEffectCount
 }
