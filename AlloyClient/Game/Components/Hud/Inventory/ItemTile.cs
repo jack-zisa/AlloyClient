@@ -122,6 +122,8 @@ public sealed class ItemTile : Sprite {
             if (Owner is Player && SlotType == 0) _slotId.Visible = true;
             if (_tooltip != null) TooltipManager.RemoveTooltip(_tooltip);
         }
+        
+        if (SlotId < 4) Map.LocalPlayer.UpdateItemStatBonuses();
 
         UpdateTierTag();
     }
@@ -315,6 +317,7 @@ public sealed class ItemTile : Sprite {
 
                 SetItem(ItemDesc);
                 tile.SetItem(tile.ItemDesc);
+                
                 break; // swap
             case InventoryGrid grid:
                 break; // add to first free slot
@@ -324,10 +327,11 @@ public sealed class ItemTile : Sprite {
                     ObjectId = Owner.ObjectId,
                     SlotId = SlotId
                 };
-
+                
                 Client.QueuePacket(drop);
 
                 SetItem(null);
+                
                 break; // drop
             default:
                 //reset tile

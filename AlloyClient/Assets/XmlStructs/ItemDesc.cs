@@ -88,8 +88,8 @@ public class ItemDesc {
 }
 
 public class StatBoostDesc(XElement xml) {
-    public int Stat = xml.GetValue<int>("Stat");
-    public int Amount = xml.GetValue<int>("Amount");
+    public int Stat = xml.GetAttribute<int>("stat");
+    public int Amount = xml.GetAttribute<int>("amount");
 }
 
 public class ProjectileDesc {

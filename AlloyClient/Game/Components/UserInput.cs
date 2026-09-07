@@ -129,7 +129,7 @@ public sealed class UserInput : Sprite {
 
     private void InvSlotUse(int index) {
         if (ScreenManager.GetScreen() is GameScreen gameScreen) {
-            var equippedTiles = gameScreen.GetHud().GetInventory().GetItemTiles();
+            var equippedTiles = gameScreen.GetHud().GetHotbarInventory().GetItemTiles();
             var invTiles = gameScreen.GetHud().GetTabs().GetInventoryGrid().GetItemTiles();
 
             var slotTypes = Map.LocalPlayer.Properties.SlotTypes[..4];
@@ -148,6 +148,9 @@ public sealed class UserInput : Sprite {
                 ItemDesc temp = itemDesc;
                 tile.SetItem(hotbarTile.ItemDesc);
                 hotbarTile.SetItem(temp);
+                
+                //Console.WriteLine(tile.SlotId + " | " + hotbarTile.SlotId);
+                //Map.LocalPlayer.UpdateItemStatBonuses();
 
                 var swap = InvSwap.CreatePacket();
 

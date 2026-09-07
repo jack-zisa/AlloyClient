@@ -11,6 +11,8 @@ using AlloyClient.Rendering.Types;
 using AlloyClient.Utils;
 using Alloy.Common.Structs;
 using Alloy.Engine;
+using AlloyClient.Assets.XmlStructs;
+using AlloyClient.Display;
 using AlloyClient.Logging;
 using Microsoft.Extensions.Logging;
 using OpenTK.Mathematics;
@@ -186,6 +188,62 @@ public class Player : Entity {
         }
         Effect?.Update(time, dt);
         return true;
+    }
+
+    public void UpdateItemStatBonuses() {
+        int maxHp = 0;
+        int maxMp = 0;
+        int attack = 0;
+        int defense = 0;
+        int speed = 0;
+        int vitality = 0;
+        int wisdom = 0;
+        int dexterity = 0;
+        
+        if (ScreenManager.GetScreen() is GameScreen gameScreen && gameScreen.GetHud().GetHotbarInventory() != null) {
+            foreach (var itemTile in gameScreen.GetHud().GetHotbarInventory().GetItemTiles()) {
+                if (itemTile.ItemDesc == null)
+                    continue;
+            
+                foreach (var statBoost in itemTile.ItemDesc.StatBoosts) {
+                    switch (statBoost.Stat) {
+                        case 0:
+                            maxHp += statBoost.Amount;
+                            break;
+                        case 3:
+                            maxMp += statBoost.Amount;
+                            break;
+                        case 20:
+                            attack += statBoost.Amount;
+                            break;
+                        case 21:
+                            defense += statBoost.Amount;
+                            break;
+                        case 22:
+                            speed += statBoost.Amount;
+                            break;
+                        case 26:
+                            vitality += statBoost.Amount;
+                            break;
+                        case 27:
+                            wisdom += statBoost.Amount;
+                            break;
+                        case 28:
+                            dexterity += statBoost.Amount;
+                            break;
+                    }
+                }
+            }
+        }
+        
+        MaxHpBoost = maxHp;
+        MaxMpBoost = maxMp;
+        AttackBoost = attack;
+        DefenseBoost = defense;
+        SpeedBoost = speed;
+        VitalityBoost = vitality;
+        WisdomBoost = wisdom;
+        DexterityBoost = dexterity;
     }
 
     public override void UpdateStats(StatData[] statData, int offset, int count) {

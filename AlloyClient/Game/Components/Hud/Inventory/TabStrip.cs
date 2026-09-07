@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AlloyClient.Game.Objects;
 using Alloy.UiLib.BuiltIn;
 using Alloy.UiLib.Core;
 using AlloyClient.Assets.XmlStructs;
 using AlloyClient.Ui.Components.Buttons;
 using AlloyClient.Utils;
+using Org.BouncyCastle.Utilities;
 
 namespace AlloyClient.Game.Components.Hud.Inventory
 {
@@ -163,14 +165,19 @@ namespace AlloyClient.Game.Components.Hud.Inventory
             AddChild(bg);
 
             string[] IndexName = { "ATK" , "DEF", "SPD", "DEX" , "VIT" , "WIS"};
-            int[] IndexValue = { player.Attack, player.Defense, player.Speed, player.Dexterity, player.Vitality, player.Wisdom};
+            int[] IndexValue = { player.Attack + player.AttackBoost, player.Defense + player.DefenseBoost, player.Speed + player.SpeedBoost, player.Dexterity + player.DexterityBoost, player.Vitality + player.VitalityBoost, player.Wisdom + player.WisdomBoost};
             int[] IndexMaxValue = { playerProperties.MaxAttack, playerProperties.MaxDefense, playerProperties.MaxSpeed, playerProperties.MaxDexterity, playerProperties.MaxVitality, playerProperties.MaxWisdom};
+            int[] IndexBonuses = { player.AttackBoost, player.DefenseBoost, player.SpeedBoost, player.DexterityBoost, player.VitalityBoost, player.WisdomBoost};
             
             for (int i = 0; i < IndexValue.Length; i++) {
                 var value = IndexValue[i];
                 bool maxed = value >= IndexMaxValue[i];
+                var bonus = IndexBonuses[i];
                 bool even = i % 2 == 0;
-                bool extraInfo = false;
+                string sign = bonus > 0 ? "+" : bonus < 0 ? "-" : "";
+                bool hasBonus = bonus != 0f;
+
+                var color = maxed ? 0xFFC800u : hasBonus ? 0x14f007u : 0xFFFFFFu;
 
                 SimpleText StatName = new SimpleText(new TextConfig {
                     Text = IndexName[i],
@@ -188,14 +195,14 @@ namespace AlloyClient.Game.Components.Hud.Inventory
                 AddChild(StatName);
 
                 SimpleText StatValue = new SimpleText(new TextConfig {
-                    Text = value + (extraInfo ? $" +{0}" : ""), // TODO: Implement stat bonuses
+                    Text = value + (hasBonus ? $" ({sign}{bonus})" : ""),
                     FontSize = 16,
                     FontType = FontType.Bold,
                     X = (even ? offset : Width - 16 - offset * 2) + StatName.Width + 5, //kinda gross but its needed
                     Y = y,
                     OutlineThickness = 0,
-                    Color = maxed ? 0xFFC800u : 0xFFFFFF,
-                    OutlineColor = maxed ? 0xFFC800u : 0xFFFFFF,
+                    Color = color,
+                    OutlineColor = color,
                     Anchor = UiAnchor.MiddleLeft
                 });
 

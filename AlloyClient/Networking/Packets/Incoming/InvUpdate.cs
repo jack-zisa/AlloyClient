@@ -40,18 +40,22 @@ public class InvUpdate : IncomingPacket<InvUpdate> {
                 Map.LocalPlayer.Equipment[slot] = null;
 
                 if (slot < 4 && ScreenManager.GetScreen() is GameScreen gameScreen) {
-                    gameScreen.GetHud().GetInventory().GetItemTiles()[slot].SetItem(null);
+                    gameScreen.GetHud().GetHotbarInventory().GetItemTiles()[slot].SetItem(null);
                 }
             } else {
                 Map.LocalPlayer.Equipment[slot] = ObjectLibrary.TypeToItem[(ushort) itemType];
 
                 if (slot < 4 && ScreenManager.GetScreen() is GameScreen gameScreen) {
-                    gameScreen.GetHud().GetInventory().GetItemTiles()[slot].SetItem(ObjectLibrary.TypeToItem[(ushort) itemType]);
+                    gameScreen.GetHud().GetHotbarInventory().GetItemTiles()[slot].SetItem(ObjectLibrary.TypeToItem[(ushort) itemType]);
                 }
             }
             
             Map.LocalPlayer.InventoryUpdate.Dispatch(slot);
         }
+
+        /*if (Slots.ContainsAnyInRange(0, 3)) {
+            Map.LocalPlayer.UpdateItemStatBonuses();
+        }*/
     }
 
     public override string ToString() {

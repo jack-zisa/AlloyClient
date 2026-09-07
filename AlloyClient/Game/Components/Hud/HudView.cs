@@ -62,7 +62,7 @@ public sealed class HudView : Sprite {
         AddChild(_interactPanel);
     }
 
-    public EquippedGrid GetInventory() {
+    public EquippedGrid GetHotbarInventory() {
         return _equippedGrid;
     }
 

@@ -80,12 +80,18 @@ public class StatusBar : Sprite {
             if (level >= 20 && ltm > 0)
                 ltmt = $"|{Math.Ceiling(ltm / 5f)}";
         }
+        
+        string sign = boost > 0 ? "+" : boost < 0 ? "-" : "";
+        bool hasBonus = boost != 0f;
+        bool maxed = val >= baseMax;
 
         if (max > 0)
-            _valueText.SetText($"{val}/{max}" + ltmt);
+            _valueText.SetText($"{val + boost}/{max}" + ltmt + (hasBonus ? $" ({sign}{boost})" : ""));
         else
-            _valueText.SetText($"{val}");
+            _valueText.SetText($"{val + boost}" + (hasBonus ? $" ({sign}{boost})" : ""));
         _valueText.X = _width / 2 - _valueText.Width / 2;
+        
+        _valueText.SetColor(maxed ? 0xFFC800u : hasBonus ? 0x14f007u : 0xFFFFFFu);
     }
 
     private void OnMouseOver() => _mouseOver = true;
