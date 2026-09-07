@@ -40,19 +40,18 @@ public unsafe struct ConditionEffectBucket {
     }
 
     public readonly bool HasConditionEffect(ConditionEffect effect) => (_buckets[(EffectType) effect / ConditionEffects.MaxBucketSize] & (1 << ((EffectType) effect % ConditionEffects.MaxBucketSize))) != 0;
-
-    public void SetBucket(int bucketId, int bucketValue) {
-        _buckets[bucketId] = bucketValue;
-        UpdateTotalIcons();
-    }
     
     public void AddConditionEffect(ConditionEffect effect) {
+        if (HasConditionEffect(effect))
+            return;
         var effectId = (EffectType) effect;
         _buckets[effectId / ConditionEffects.MaxBucketSize] |= 1 << effectId % ConditionEffects.MaxBucketSize;
         UpdateTotalIcons();
     }
 
     public void RemoveConditionEffect(ConditionEffect effect) {
+        if (!HasConditionEffect(effect))
+            return;
         var effectId = (EffectType)effect;
         _buckets[effectId / ConditionEffects.MaxBucketSize] &= ~(1 << effectId % ConditionEffects.MaxBucketSize);
         UpdateTotalIcons();
