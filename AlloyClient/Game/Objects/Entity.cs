@@ -173,6 +173,10 @@ public class Entity {
 
     public bool HasConditionEffect(ConditionEffect effect) => EffectBuckets.HasConditionEffect(effect);
 
+    public void AddConditionEffect(ConditionEffect effect) => EffectBuckets.AddConditionEffect(effect);
+
+    public void RemoveConditionEffect(ConditionEffect effect) => EffectBuckets.RemoveConditionEffect(effect);
+
     public virtual bool Update(double time, double dt) {
         if (Settings.MovementInterpolation) {
             var dx = TickPosition.X - Position.X;

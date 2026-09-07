@@ -16,7 +16,7 @@ public class ConditionEffect : IncomingPacket<ConditionEffect> {
     }
 
     public override void Handle() {
-        Map.LocalPlayer.EffectBuckets.AddConditionEffect(Game.ConditionEffect.FromName(Effect));
+        Map.LocalPlayer.AddConditionEffect(Game.ConditionEffect.FromName(Effect));
     }
 
     public override string ToString() {
