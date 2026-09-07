@@ -97,7 +97,8 @@ public sealed class Projectile : IResettable { // TODO: make struct
     private float _rotation;
     private float _elapsed; // double
     private Vector2 _position;
-
+    private bool _hasHit;
+    
     public void Reset(ushort id, int dmg, float angle, Entity entity, ObjectProperties objDesc, ProjectileProperties projDesc, ProjectilePath path, Vector2 startPos) {
         Path = path ?? projDesc.Path.Clone();
         Path.SetInfo(new ProjectileInfo() { LifetimeMs = Path.LifetimeMs, ProjId = id, ShootAngle = angle * MathHelper.DegToRad, StartPos = startPos});
@@ -116,12 +117,14 @@ public sealed class Projectile : IResettable { // TODO: make struct
         _noRotation = projDesc.NoRotation;
         _hasTrail = projDesc.HasParticleTrail;
         _particleTrail = projDesc.ParticleTrail;
+        _hasHit = false;
     }
 
     public bool IsInPool { get; set; }
 
     public void Reset() {
         Path = null;
+        _hasHit = false;
         
         /* === temp === */
         _elapsed = 0;
@@ -133,6 +136,9 @@ public sealed class Projectile : IResettable { // TODO: make struct
     }
 
     public bool Update(in GameTime gameTime) {
+        if (_hasHit)
+            return false;
+        
         _elapsed += (float)gameTime.ElapsedMs;
 
         if (_elapsed > Path.LifetimeMs) {
@@ -155,6 +161,9 @@ public sealed class Projectile : IResettable { // TODO: make struct
     }
 
     public void FixedUpdate(in GameTime gameTime) {
+        if (_hasHit)
+            return;
+        
         if (HitTest(gameTime.TotalMs)) {
             _elapsed = float.MaxValue;
             return;
@@ -198,6 +207,9 @@ public sealed class Projectile : IResettable { // TODO: make struct
     }
     
     private bool HitTest(double time) {
+        if (_hasHit)
+            return false;
+
         if (_damagePlayers) {
 
             var target = EntityUtils.GetClosestPlayer(_position, 0.5f);
@@ -205,6 +217,9 @@ public sealed class Projectile : IResettable { // TODO: make struct
             if (target == null || target.MultiHitUsed.ContainsKey(_key)) {
                 return false;
             }
+            
+            if (!_multiHit)
+                _hasHit = true;
             
             Map.AddParticleEffect(new HitEffect(target, 0xFF0000));
             NotificationLayer.AddStatusText(target, $"-{_damage}", 0xFF0000, 1000, 0);
@@ -228,6 +243,9 @@ public sealed class Projectile : IResettable { // TODO: make struct
         if (enemy == null || enemy.MultiHitUsed.ContainsKey(_key)) {
             return false;
         }
+        
+        if (!_multiHit)
+            _hasHit = true;
 
         Map.AddParticleEffect(new HitEffect(enemy, 0xFF0000));
         NotificationLayer.AddStatusText(enemy, $"-{_damage}", 0xFF0000, 1000, 0);
