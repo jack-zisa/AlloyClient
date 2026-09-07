@@ -296,6 +296,7 @@ public sealed class ItemTile : Sprite {
                 //Console.WriteLine($"{!tile.Interactive} {tile.OneWay} {!CanSwapItems(this, tile)}");
                 if (!tile.Interactive) break;
                 if (tile.OneWay) break;
+                if (tile.SlotId == SlotId) break; // Don't swap the same slot
                 if (!CanSwapItems(this, tile)) break;
 
                 var swap = InvSwap.CreatePacket();
