@@ -4561,7 +4561,7 @@
         <SlotType>9</SlotType>
         <Tier>6</Tier>
         <Description>An immaculately perfect emerald embedded in an exquisite gold ring.</Description>
-        <ActivateOnEquip stat="4" amount="1">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="4" amount="10">IncrementStat</ActivateOnEquip>
         <BagType>9</BagType>
         <FameBonus>5</FameBonus>
         <feedPower>325</feedPower>
@@ -4637,7 +4637,7 @@
         <Description>Cut from a fallen star, a deep purple emanating an unearthly glow, hinting at the power fused
             within.
         </Description>
-        <ActivateOnEquip stat="0" amount="190">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="0" amount="210">IncrementStat</ActivateOnEquip>
         <BagType>9</BagType>
         <FameBonus>5</FameBonus>
         <feedPower>350</feedPower>
@@ -4650,9 +4650,129 @@
             <Index>0x48f</Index>
         </Texture>
         <SlotType>9</SlotType>
-        <Tier>6</Tier>
+        <Tier>7</Tier>
         <Description>An immaculately perfect amethyst embedded in an exquisite gold ring.</Description>
         <ActivateOnEquip stat="3" amount="180">IncrementStat</ActivateOnEquip>
+        <BagType>9</BagType>
+        <FameBonus>5</FameBonus>
+        <feedPower>325</feedPower>
+    </Object>
+    <Object type="0xbb3" id="Ring of Transcendent Attack">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+            <File>lofiObj5</File>
+            <Index>0xd0</Index>
+        </Texture>
+        <SlotType>9</SlotType>
+        <Tier>7</Tier>
+        <Description>An impeccably pristine spinel embedded in an enchanted gold ring.</Description>
+        <ActivateOnEquip stat="20" amount="11">IncrementStat</ActivateOnEquip>
+        <BagType>9</BagType>
+        <FameBonus>5</FameBonus>
+        <feedPower>325</feedPower>
+    </Object>
+    <Object type="0xbb4" id="Ring of Transcendent Defense">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+            <File>lofiObj5</File>
+            <Index>0xd1</Index>
+        </Texture>
+        <SlotType>9</SlotType>
+        <Tier>7</Tier>
+        <Description>An impeccably pristine onyx embedded in an enchanted gold ring.</Description>
+        <ActivateOnEquip stat="21" amount="11">IncrementStat</ActivateOnEquip>
+        <BagType>9</BagType>
+        <FameBonus>5</FameBonus>
+        <feedPower>325</feedPower>
+    </Object>
+    <Object type="0xbb5" id="Ring of Transcendent Speed">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+            <File>lofiObj5</File>
+            <Index>0xd2</Index>
+        </Texture>
+        <SlotType>9</SlotType>
+        <Tier>7</Tier>
+        <Description>An impeccably pristine emerald embedded in an enchanted gold ring.</Description>
+        <ActivateOnEquip stat="4" amount="11">IncrementStat</ActivateOnEquip>
+        <BagType>9</BagType>
+        <FameBonus>5</FameBonus>
+        <feedPower>325</feedPower>
+    </Object>
+    <Object type="0xbb6" id="Ring of Transcendent Vitality">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+            <File>lofiObj5</File>
+            <Index>0xd3</Index>
+        </Texture>
+        <SlotType>9</SlotType>
+        <Tier>7</Tier>
+        <Description>An impeccably pristine ruby embedded in an enchanted gold ring.</Description>
+        <ActivateOnEquip stat="26" amount="11">IncrementStat</ActivateOnEquip>
+        <BagType>9</BagType>
+        <FameBonus>5</FameBonus>
+        <feedPower>325</feedPower>
+    </Object>
+    <Object type="0xbb7" id="Ring of Transcendent Wisdom">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+            <File>lofiObj5</File>
+            <Index>0xd4</Index>
+        </Texture>
+        <SlotType>9</SlotType>
+        <Tier>7</Tier>
+        <Description>An impeccably pristine sapphire embedded in an enchanted gold ring.</Description>
+        <ActivateOnEquip stat="27" amount="11">IncrementStat</ActivateOnEquip>
+        <BagType>9</BagType>
+        <FameBonus>5</FameBonus>
+        <feedPower>325</feedPower>
+    </Object>
+    <Object type="0xbb8" id="Ring of Transcendent Dexterity">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+            <File>lofiObj5</File>
+            <Index>0xd5</Index>
+        </Texture>
+        <SlotType>9</SlotType>
+        <Tier>7</Tier>
+        <Description>An impeccably pristine citrine embedded in an enchanted gold ring.</Description>
+        <ActivateOnEquip stat="28" amount="11">IncrementStat</ActivateOnEquip>
+        <BagType>9</BagType>
+        <FameBonus>5</FameBonus>
+        <feedPower>325</feedPower>
+    </Object>
+    <Object type="0xbb9" id="Ring of Transcendent Health">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+            <File>lofiObj5</File>
+            <Index>0xd6</Index>
+        </Texture>
+        <SlotType>9</SlotType>
+        <Tier>7</Tier>
+        <Description>An impeccably pristine topaz embedded in an enchanted gold ring.</Description>
+        <ActivateOnEquip stat="0" amount="200">IncrementStat</ActivateOnEquip>
+        <BagType>9</BagType>
+        <FameBonus>5</FameBonus>
+        <feedPower>325</feedPower>
+    </Object>
+    <Object type="0xbba" id="Ring of Transcendent Magic">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+            <File>lofiObj5</File>
+            <Index>0xd7</Index>
+        </Texture>
+        <SlotType>9</SlotType>
+        <Tier>7</Tier>
+        <Description>An impeccably pristine amethyst embedded in an enchanted gold ring.</Description>
+        <ActivateOnEquip stat="3" amount="200">IncrementStat</ActivateOnEquip>
         <BagType>9</BagType>
         <FameBonus>5</FameBonus>
         <feedPower>325</feedPower>
