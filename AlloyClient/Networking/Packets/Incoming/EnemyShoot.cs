@@ -1,4 +1,6 @@
-﻿using AlloyClient.Assets.Libraries;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AlloyClient.Assets.Libraries;
 using AlloyClient.Game;
 using AlloyClient.Game.Objects;
 using AlloyClient.Game.Objects.ProjectilePaths;
@@ -50,7 +52,18 @@ public class EnemyShoot : IncomingPacket<EnemyShoot> {
     }
 
     public override void Handle() {
-        if (!Map.Entities.TryGetValue(OwnerId, out var en))
+        Entity entity = null;
+        Dictionary<int, Entity> entitiesDict = null;
+        foreach (var entities in Map.Entities.Values.Where(entities => entities.ContainsKey(OwnerId))) {
+            entity = entities[OwnerId];
+            entitiesDict = entities;
+            break;
+        }
+        
+        if (entity == null)
+            return;
+        
+        if (!entitiesDict.TryGetValue(OwnerId, out var en))
             return;
 
         var containerDesc = en.Properties;

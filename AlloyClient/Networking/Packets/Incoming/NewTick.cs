@@ -51,7 +51,8 @@ public class NewTick : IncomingPacket<NewTick> {
     }
 
     private void ProcessObjectStats(ObjectStats stats) {
-        if (!Map.Entities.TryGetValue(stats.Id, out var en)) {
+        var cell = Map.GetCell(stats.Position.X, stats.Position.Y);
+        if (!Map.Entities.ContainsKey(cell) || !Map.Entities[cell].TryGetValue(stats.Id, out var en)) {
             Client.Logger.Log(LogLevel.Warning, $"[NewTick] Unable to lookup id: {stats.Id}");
             return;
         }

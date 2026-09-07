@@ -45,12 +45,22 @@ public static class PartyData {
 
         var localPosition = Map.LocalPlayer.Position;
         var i = 0;
-        
-        foreach (var player in Map.Players.Values) {
-            Vector2.DistanceSquared(localPosition, player.Position, out var dist);
-            if (dist < MaxDistance) {
-                Members[i] = new PartyInfo(player, player.Locked, dist, player.ObjectId);
-                i++;
+        var maxDistanceSq = MaxDistance * MaxDistance;
+
+        foreach (var cell in Map.GetCellsInRadius(localPosition, MaxDistance)) {
+            if (!Map.Players.TryGetValue(cell, out var players))
+                continue;
+
+            foreach (var player in players.Values) {
+                Vector2.DistanceSquared(localPosition, player.Position, out var distSq);
+
+                if (distSq >= maxDistanceSq)
+                    continue;
+
+                if (i >= Members.Length)
+                    break;
+
+                Members[i++] = new PartyInfo(player, player.Locked, distSq, player.ObjectId);
             }
         }
         

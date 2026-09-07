@@ -13,7 +13,7 @@ public sealed class MinimapLayer : Container {
     private const int VertexSize = MaxEntities * 4;
     private const int IndexSize = MaxEntities * 6;
 
-    private int _count = 0;
+    private int _count;
     private float _size;
 
     private static Entity _focus;
@@ -67,36 +67,37 @@ public sealed class MinimapLayer : Container {
         _count = 0;
         OverridePrimCount = 0;
 
-        foreach (var kvp in Map.Entities) {
-            var entity = kvp.Value;
+        foreach (var entities in Map.Entities.Values) {
+            foreach (var kvp in entities) {
+                var entity = kvp.Value;
             
-            if (entity.Properties.Static || entity.Properties.NoMiniMap || entity.ObjectId == _focus.ObjectId) continue;
+                if (entity.Properties.Static || entity.Properties.NoMiniMap || entity.ObjectId == _focus.ObjectId) continue;
 
-            var fillColor = 0u;
+                var fillColor = 0u;
             
-            if (entity is Player player) {
-                if (false) {// todo: paused
-                    fillColor = 0x7F7F7F;
-                } else if (player.IsFellowGuild) {
-                    fillColor = 0x00FF00;
+                if (entity is Player player) {
+                    if (false) {// todo: paused
+                        fillColor = 0x7F7F7F;
+                    } else if (player.IsFellowGuild) {
+                        fillColor = 0x00FF00;
+                    } else {
+                        fillColor = 0xFFFF00;
+                    }
                 } else {
-                    fillColor = 0xFFFF00;
+                    if (entity.Properties.IsEnemy) {
+                        fillColor = 0xFF0000;
+                    } else if (entity.Properties.Class is "Portal" or "GuildHallPortal") {
+                        fillColor = 0x0000FF;
+                    } else {
+                        continue;
+                    }
                 }
-            } else {
-                if (entity.Properties.IsEnemy) {
-                    fillColor = 0xFF0000;
-                } else if (entity.Properties.Class is "Portal" or "GuildHallPortal") {
-                    fillColor = 0x0000FF;
-                } else {
-                    continue;
-                }
+
+                var ratio = (entity.Position - Map.LocalPlayer.Position) / _size;
+
+                var pos = new Vector2(Minimap.MapSize / 2f) + new Vector2(Minimap.MapSize / 2f) * ratio;
+                AddObject(pos, fillColor);
             }
-
-            var ratio = (entity.Position - Map.LocalPlayer.Position) / _size;
-
-            var pos = new Vector2(Minimap.MapSize / 2f) + new Vector2(Minimap.MapSize / 2f) * ratio;
-            AddObject(pos, fillColor);
         }
-        
     }
 }

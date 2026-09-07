@@ -31,11 +31,13 @@ public class Entity {
 
     public float HeightOffset;
     public Vector2 Position;
+    public Vector2 PrevPosition;
     public float Rotation;
     public float X => Position.X;
     public float Y => Position.Y;
     public float Z;
-
+    public (int X, int Y) GridCell;
+    
     public Vector2 MovementVector;
     public Vector2 TickPosition;
     public Vector2 PositionAtTick;
@@ -163,6 +165,8 @@ public class Entity {
     }
 
     public void SetPos(float x, float y) {
+        PrevPosition.X = Position.X;
+        PrevPosition.Y = Position.Y;
         Position.X = x;
         Position.Y = y;
 
@@ -189,7 +193,7 @@ public class Entity {
                 MovementVector.Y = 0;
             }
         } else {
-            if (MovementVector is not {X: 0, Y: 0}) {
+            if (IsMoving()) {
                 if (LastTickId >= Map.LastTickId) {
                     var tickDt = time - LastTickUpdateTime;
                     var pX = PositionAtTick.X + tickDt * MovementVector.X;
@@ -246,7 +250,13 @@ public class Entity {
         
         Position.X = x;
         Position.Y = y;
-
+        
+        var newCell = Map.GetCell(Position);
+        if (newCell != GridCell) {
+            Map.QueueCellUpdate(this, GridCell, newCell);
+            GridCell = newCell;
+        }
+        
         if (Properties.Static) {
             if (Tile != null) {
                 Tile.OccupiedObject = null;

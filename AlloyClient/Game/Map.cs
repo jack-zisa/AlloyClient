@@ -127,7 +127,8 @@ public static class Map {
     private static readonly ILogger Logger = ILogger.CreateLogger(nameof(Map));
     
     public const int TileRenderDistance = 20;
-
+    private const float EntityCellSize = 4f;
+    
     public static GameTime LastGameTime;
 
     public static double CurrentTime;
@@ -144,9 +145,11 @@ public static class Map {
     
     private static readonly TileMap Tiles = new ();
     public static readonly RenderStorage EntityStorage = new();
-    public static readonly Dictionary<int, Player> Players = new();
-    public static readonly Dictionary<int, Entity> Entities = new(); // todo: add players to separate dic for minimap prio
-    public static readonly Dictionary<int, Entity> InteractiveObjects = new();
+    public static readonly Dictionary<(int x, int y), Dictionary<int, Player>> Players = new();
+    public static readonly Dictionary<(int x, int y), Dictionary<int, Entity>> Entities = new(); // todo: add players to separate dic for minimap prio
+    public static readonly Dictionary<(int x, int y), Dictionary<int, Entity>> InteractiveObjects = new();
+    private static readonly Dictionary<int, (Entity Entity, (int X, int Y) OldCell, (int X, int Y) NewCell)> PendingCellUpdates = [];
+    private static readonly List<int> PendingRemovals = [];
     
     public static readonly List<ParticleEffect> ParticleGenerators = [];
 
@@ -194,6 +197,49 @@ public static class Map {
         Minimap.OnNewMap.Dispatch(width, height);
         Tiles.SetDimensions(width, height);
     }
+    
+    public static (int X, int Y) GetCell(Vector2 position) {
+        return GetCell(position.X, position.Y);
+    }
+
+    public static (int X, int Y) GetCell(float x, float y) {
+        return ((int)MathF.Floor(x / EntityCellSize), (int)MathF.Floor(y / EntityCellSize));
+    }
+
+    public static void EnsureCellExists((int X, int Y) cell, bool player = false, bool obj = false) {
+        if (!Entities.ContainsKey(cell)) {
+            Entities[cell] = new Dictionary<int, Entity>();
+        }
+
+        if (player && !Players.ContainsKey(cell)) {
+            Players[cell] = new Dictionary<int, Player>();
+        }
+
+        if (obj && !InteractiveObjects.ContainsKey(cell)) {
+            InteractiveObjects[cell] = new Dictionary<int, Entity>();
+        }
+    }
+    
+    public static void QueueCellUpdate(Entity entity, (int X, int Y) oldCell, (int X, int Y) newCell) {
+        if (oldCell == newCell)
+            return;
+
+        if (PendingCellUpdates.TryGetValue(entity.ObjectId, out var existing)) {
+            PendingCellUpdates[entity.ObjectId] = (entity, existing.OldCell, newCell);
+        } else {
+            PendingCellUpdates[entity.ObjectId] = (entity, oldCell, newCell);
+        }
+    }
+    
+    public static IEnumerable<(int X, int Y)> GetCellsInRadius(Vector2 position, float radius) {
+        var minCell = GetCell(new Vector2(position.X - radius, position.Y - radius));
+        var maxCell = GetCell(new Vector2(position.X + radius, position.Y + radius));
+        for (var y = minCell.Y; y <= maxCell.Y; y++) {
+            for (var x = minCell.X; x <= maxCell.X; x++) {
+                yield return (x, y);
+            }
+        }
+    }
 
     public static void Update(in GameTime gameTime, in Camera camera) {
         CurrentTime = gameTime.TotalMs;
@@ -204,13 +250,23 @@ public static class Map {
         var fullMatrix = camera.Matrix;
         var matrix = new DepthMatrix(camera.Matrix);
 
-        foreach (var (objectId, entity) in Entities) {
-            if (!entity.Update(time, dt)) {
-                Entities.Remove(objectId);
-            }
+        foreach (var (_, entities) in Entities) {
+            foreach (var (objectId, entity) in entities) {
+                if (!entity.Update(time, dt)) {
+                    PendingRemovals.Add(objectId);
+                }
 
-            entity.UpdateVisibility(ref fullMatrix);
+                entity.UpdateVisibility(ref fullMatrix);
+            }
         }
+        
+        ApplyPendingCellUpdates();
+        
+        foreach (var id in PendingRemovals) {
+            RemoveEntity(id);
+        }
+
+        PendingRemovals.Clear();
 
         for (var i = ParticleGenCount - 1; i >= 0; i--) {
             var gen = ParticleGenerators[i];
@@ -237,11 +293,46 @@ public static class Map {
     }
 
     public static void FixedUpdate(in GameTime gameTime) {
-        foreach (var projectile in Projectiles) {
-            projectile.FixedUpdate(in gameTime);
+        var count = Projectiles.Count;
+        for (var i = 0; i < count; i++) {
+            Projectiles[i].FixedUpdate(in gameTime);
         }
     }
     
+    public static void ApplyPendingCellUpdates() {
+        foreach (var (_, update) in PendingCellUpdates) {
+            var entity = update.Entity;
+
+            if (Entities.TryGetValue(update.OldCell, out var oldEntities)) {
+                oldEntities.Remove(entity.ObjectId);
+            }
+
+            var isPlayer = entity is Player;
+            var isInteractive = InteractPanel.IsInteractiveObject(entity);
+
+            EnsureCellExists(update.NewCell, isPlayer, isInteractive);
+
+            Entities[update.NewCell][entity.ObjectId] = entity;
+
+            if (entity is Player player && player.ObjectId != LocalPlayerId) {
+                if (Players.TryGetValue(update.OldCell, out var oldPlayers)) {
+                    oldPlayers.Remove(player.ObjectId);
+                }
+
+                Players[update.NewCell][player.ObjectId] = player;
+            }
+
+            if (isInteractive) {
+                if (InteractiveObjects.TryGetValue(update.OldCell, out var oldObjects)) {
+                    oldObjects.Remove(entity.ObjectId);
+                }
+
+                InteractiveObjects[update.NewCell][entity.ObjectId] = entity;
+            }
+        }
+
+        PendingCellUpdates.Clear();
+    }
 
     private static readonly List<TileData> VisibleTiles = new (Render.TileBufferSize);
 
@@ -394,34 +485,43 @@ public static class Map {
     }
 
     public static void AddEntity(Entity en, Position position) {
-        if (!Entities.TryAdd(en.ObjectId, en))
+        (int x, int y) cell = GetCell(en.Position);
+        EnsureCellExists(cell, en is Player, InteractPanel.IsInteractiveObject(en));
+        if (!Entities[cell].TryAdd(en.ObjectId, en))
             return;
 
+        en.GridCell = cell;
         EntityStorage.Add(en);
 
         if (en is Player p) {
-            if(p.ObjectId != LocalPlayerId)
-                Players.TryAdd(p.ObjectId, p);
+            if (p.ObjectId != LocalPlayerId)
+                Players[cell].TryAdd(p.ObjectId, p);
             p.Ignored = PartyData.IgnoredPlayers.Contains(p.AccountId);
             p.Locked = PartyData.LockedPlayers.Contains(p.AccountId);
         }
             
 
         if (InteractPanel.IsInteractiveObject(en))
-            InteractiveObjects.TryAdd(en.ObjectId, en);
+            InteractiveObjects[cell].TryAdd(en.ObjectId, en);
 
         en.OnAddedToMap(position);
     }
 
     public static void RemoveEntity(int id) {
-        if (!Entities.Remove(id, out var en)) 
+        Entity entity = null;
+        foreach (var entities in Entities.Values) {
+            if (entities.Remove(id, out var en)) continue;
+            entity = en;
             return;
+        }
+        
+        (int x, int y) cell = GetCell(entity.Position);
+        
+        Players[cell].Remove(id);
+        InteractiveObjects[cell].Remove(id);
 
-        Players.Remove(id);
-        InteractiveObjects.Remove(id);
-
-        EntityStorage.Remove(en);
-        en.OnRemovedFromMap();
+        EntityStorage.Remove(entity);
+        entity.OnRemovedFromMap();
     }
 
     public static void AddProjectile(Projectile proj) {
