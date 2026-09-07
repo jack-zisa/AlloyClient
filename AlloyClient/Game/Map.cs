@@ -237,8 +237,11 @@ public static class Map {
     }
 
     public static void FixedUpdate(in GameTime gameTime) {
-        foreach (var projectile in Projectiles) {
-            projectile.FixedUpdate(in gameTime);
+        for (var i = Projectiles.Count - 1; i >= 0; i--) {
+            if (i >= Projectiles.Count - 1)
+                continue;
+            var proj = Projectiles[i];
+            proj.FixedUpdate(in gameTime);
         }
     }
     
