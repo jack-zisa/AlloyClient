@@ -56,6 +56,10 @@ namespace AlloyClient.Game.Components.Hud.Inventory
             Update();
         }
 
+        public InventoryGrid GetInventoryGrid() {
+            return _inventoryGrid;
+        }
+
         private void Update()
         {
             int Y = -24;

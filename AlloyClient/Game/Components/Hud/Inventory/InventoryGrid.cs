@@ -78,5 +78,8 @@ public sealed class InventoryGrid : Sprite {
         if (slot < _offset || slot >= _offset + NumSlots) return;
         _tiles[slot - _offset].SetItem(_owner.Equipment[slot]);
     }
-    
+
+    public ItemTile[] GetItemTiles() {
+        return _tiles;
+    }
 }

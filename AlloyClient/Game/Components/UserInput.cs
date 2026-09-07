@@ -8,8 +8,11 @@ using AlloyClient.Networking.Packets.Outgoing;
 using Alloy.UiLib.Core;
 using Alloy.Common;
 using Alloy.Engine;
+using AlloyClient.Assets.XmlStructs;
 using AlloyClient.Display;
+using AlloyClient.Game.Components.Hud.Inventory;
 using AlloyClient.Logging;
+using AlloyClient.Networking.Structs.DataObjects;
 using Microsoft.Extensions.Logging;
 using OpenTK.Mathematics;
 using OpenTK.Platform;
@@ -124,6 +127,43 @@ public sealed class UserInput : Sprite {
         Map.LocalPlayer.SetRelativeMovement(_rotateRight - _rotateLeft, _moveRight - _moveLeft, _moveDown - _moveUp);
     }
 
+    private void InvSlotUse(int index) {
+        if (ScreenManager.GetScreen() is GameScreen gameScreen) {
+            var equippedTiles = gameScreen.GetHud().GetInventory().GetItemTiles();
+            var invTiles = gameScreen.GetHud().GetTabs().GetInventoryGrid().GetItemTiles();
+
+            var slotTypes = Map.LocalPlayer.Properties.SlotTypes[..4];
+                    
+            ItemTile tile = invTiles[index];
+            ItemDesc itemDesc = tile.ItemDesc;
+            if (itemDesc == null) {
+            } else if (itemDesc.Consumable) {
+                // TODO: Consume
+            } else if (slotTypes.Contains(itemDesc.SlotType)) {
+                // Swap!
+
+                int hotbarIndex = slotTypes.IndexOf(itemDesc.SlotType);
+                ItemTile hotbarTile = equippedTiles[hotbarIndex];
+
+                ItemDesc temp = itemDesc;
+                tile.SetItem(hotbarTile.ItemDesc);
+                hotbarTile.SetItem(temp);
+
+                var swap = InvSwap.CreatePacket();
+
+                swap.SlotObj1 = new ObjectSlot {
+                    ObjectId = Map.LocalPlayerId,
+                    SlotId = (byte) hotbarIndex
+                };
+                swap.SlotObj2 = new ObjectSlot {
+                    ObjectId = tile.Owner.ObjectId,
+                    SlotId = (byte) (index + 4)
+                };
+                Client.QueuePacket(swap);
+            }
+        }
+    }
+
     private void OnScroll(MouseEvent args) {
         if (IsInputDisabled()) return;
         if (Map.LocalPlayer == null) return;
@@ -196,20 +236,28 @@ public sealed class UserInput : Sprite {
                 break;
             // Inventory //
             case true when Settings.InvOne.Equals(key):
+                InvSlotUse(0);
                 break;
             case true when Settings.InvTwo.Equals(key):
+                InvSlotUse(1);
                 break;
             case true when Settings.InvThree.Equals(key):
+                InvSlotUse(2);
                 break;
             case true when Settings.InvFour.Equals(key):
+                InvSlotUse(3);
                 break;
             case true when Settings.InvFive.Equals(key):
+                InvSlotUse(4);
                 break;
             case true when Settings.InvSix.Equals(key):
+                InvSlotUse(5);
                 break;
             case true when Settings.InvSeven.Equals(key):
+                InvSlotUse(6);
                 break;
             case true when Settings.InvEight.Equals(key):
+                InvSlotUse(7);
                 break;
             case true when Settings.HealthPotion.Equals(key):
                 break;

@@ -46,6 +46,10 @@ public sealed class GameScreen : Screen {
 
     public void CreatePlayerDependentAssets() => _hud.CreatePlayerDependentAssets(); // TODO: remove this ;-;
 
+    public HudView GetHud() {
+        return _hud;
+    }
+
     public override void Update(GameTime gameTime) {
         Client.Tick();
         

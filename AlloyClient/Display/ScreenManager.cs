@@ -43,6 +43,10 @@ public sealed class ScreenManager : Sprite {
         _instance.AddChild(_currScreen);
     }
 
+    public static Screen GetScreen() {
+        return _currScreen;
+    }
+
     public static void SetPrevious() {
         SetScreen(_prevScreen);
     }

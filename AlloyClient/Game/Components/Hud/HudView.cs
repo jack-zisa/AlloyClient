@@ -62,6 +62,14 @@ public sealed class HudView : Sprite {
         AddChild(_interactPanel);
     }
 
+    public EquippedGrid GetInventory() {
+        return _equippedGrid;
+    }
+
+    public TabStrip GetTabs() {
+        return _tabStrip;
+    }
+
     public void Update() {
         if (Map.LocalPlayer == null) {
             return;

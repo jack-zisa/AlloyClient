@@ -336,7 +336,7 @@ public sealed class ItemTile : Sprite {
         }
     }
 
-    private static bool CanSwapItems(ItemTile source, ItemTile target) {
+    public static bool CanSwapItems(ItemTile source, ItemTile target) {
         return source.CanHoldItem(target.ItemDesc) && target.CanHoldItem(source.ItemDesc);
     }
 

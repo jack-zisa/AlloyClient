@@ -62,4 +62,8 @@ public sealed class EquippedGrid : Sprite {
         if (slot >= NumSlots) return;
         _tileSlots[slot].SetItem(_owner.Equipment[slot]);
     }
+
+    public ItemTile[] GetItemTiles() {
+        return _tileSlots;
+    }
 }
