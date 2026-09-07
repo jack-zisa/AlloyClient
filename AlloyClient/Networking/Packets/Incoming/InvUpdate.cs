@@ -1,5 +1,6 @@
 ﻿using System;
 using AlloyClient.Assets.Libraries;
+using AlloyClient.Display;
 using AlloyClient.Game;
 
 namespace AlloyClient.Networking.Packets.Incoming;
@@ -22,6 +23,10 @@ public class InvUpdate : IncomingPacket<InvUpdate> {
 
     public override void Handle() {
         Map.LocalPlayer.Equipment[Slot] = ObjectLibrary.TypeToItem[ItemType];
+
+        if (Slot < 4 && ScreenManager.GetScreen() is GameScreen gameScreen) {
+            gameScreen.GetHud().GetInventory().GetItemTiles()[Slot].SetItem(ObjectLibrary.TypeToItem[ItemType]);
+        }
         Map.LocalPlayer.InventoryUpdate.Dispatch(Slot);
     }
 
