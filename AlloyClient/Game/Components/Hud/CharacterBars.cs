@@ -15,10 +15,10 @@ public class CharacterBars : Sprite {
     private int _lastPlayerLevel;
 
     public CharacterBars() {
-        _expBar = new StatusBar(210, height, 5931045, 5526612, 0xFFFFFF, "Lvl X");
-        _fameBar = new StatusBar(210, height, 14835456, 5526612, 0xFFFFFF, "Fame");
-        _hpBar = new StatusBar(210, height, 14693428, 5526612, 0xFFFFFF, "HP");
-        _mpBar = new StatusBar(210, height, 6325472, 5526612, 0xFFFFFF, "MP");
+        _expBar = new StatusBar(210, height, 5931045, 5526612, 0xFFFFFF, "Lvl", false);
+        _fameBar = new StatusBar(210, height, 14835456, 5526612, 0xFFFFFF, "Fame", false);
+        _hpBar = new StatusBar(210, height, 14693428, 5526612, 0xFFFFFF, "HP", true);
+        _mpBar = new StatusBar(210, height, 6325472, 5526612, 0xFFFFFF, "MP", true);
         _fameBar.Visible = false;
         AddChild(_hpBar);
         AddChild(_mpBar);

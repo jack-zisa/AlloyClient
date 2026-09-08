@@ -8,6 +8,7 @@ namespace AlloyClient.Game.Components.Hud;
 public class StatusBar : Sprite {
     private readonly int _width;
     private readonly int _height;
+    private readonly bool _colorify;
 
     private NineSliceRect _mainBar;
     private NineSliceRect _backgroundBar;
@@ -19,9 +20,10 @@ public class StatusBar : Sprite {
     private bool _mouseOver;
     private TextState _textState;
 
-    public StatusBar(int width, int height, uint color, uint backColor, uint outlineColor, string label) {
+    public StatusBar(int width, int height, uint color, uint backColor, uint outlineColor, string label, bool colorify) {
         _width = width;
         _height = height;
+        _colorify = colorify;
 
         _backgroundBar = new NineSliceRect(new NineSliceConfig { SliceData = SliceLibrary.StatusBar, CutX = 10, CutY = 10, Width = _width, Height = _height });
         _backgroundBar.SetColor(backColor);
@@ -91,7 +93,7 @@ public class StatusBar : Sprite {
             _valueText.SetText($"{val + boost}" + (hasBonus ? $" ({sign}{boost})" : ""));
         _valueText.X = _width / 2 - _valueText.Width / 2;
         
-        _valueText.SetColor(maxed ? 0xFFC800u : hasBonus ? 0x14f007u : 0xFFFFFFu);
+        if (_colorify) _valueText.SetColor(maxed ? 0xFFC800u : hasBonus ? 0x14f007u : 0xFFFFFFu);
     }
 
     private void OnMouseOver() => _mouseOver = true;
