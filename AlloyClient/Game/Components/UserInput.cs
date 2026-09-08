@@ -30,6 +30,7 @@ public sealed class UserInput : Sprite {
     private static bool _manualFocus = true;
 
     private bool _mouseDown;
+    private bool _mouseOverHud;
 
     private bool _autoFire;
 
@@ -104,9 +105,16 @@ public sealed class UserInput : Sprite {
     }
 
     public void Update(in GameTime gameTime, in Camera camera) {
-        if (IsInputDisabled() || !(_mouseDown || _autoFire)) {
+        if (IsInputDisabled() || !(_mouseDown || _autoFire || _mouseOverHud)) {
             return;
         }
+
+        if (Parent is GameScreen gameScreen && _mousePosition.X >= gameScreen.Width - gameScreen.GetHud().Width) {
+            _mouseOverHud = true;
+            return;
+        }
+        
+        _mouseOverHud = false;
         
         var pos = camera.ScreenToWorld(_mousePosition, Stage.Dimensions);
         var dX = pos.X - Map.LocalPlayer.Position.X;
