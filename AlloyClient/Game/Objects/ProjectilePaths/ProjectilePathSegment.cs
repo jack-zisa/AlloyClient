@@ -18,6 +18,9 @@ public class ProjectilePathSegment
 
     protected int? _lifetimeMs;
 
+    protected AccelerationDesc _acceleration;
+    private int _lastAccelerationStep = -1;
+    
     public ProjectilePathSegment(PathType pathType) {
         Type = pathType;
     }
@@ -26,13 +29,14 @@ public class ProjectilePathSegment
     ///     Initializes a new instance of the <see cref="ProjectilePathSegment" /> class.
     /// </summary>
     /// <param name="pathType">Path type.</param>
-    public ProjectilePathSegment(PathType pathType, float speed, float? angle = null, int? lifetimeMs = null, int? timeOffset = null, params PathSegmentModifier[] mods)
+    public ProjectilePathSegment(PathType pathType, float speed, float? angle = null, int? lifetimeMs = null, AccelerationDesc acceleration = null, int? timeOffset = null, params PathSegmentModifier[] mods)
     {
         Type = pathType;
         Speed = speed;
         TimeOffset = timeOffset ?? 0;
         _angle = angle * MathHelper.DegToRad;
         _lifetimeMs = lifetimeMs;
+        _acceleration = acceleration;
         _mods = GetModsFlag(mods);
     }
 
@@ -66,6 +70,11 @@ public class ProjectilePathSegment
     }
 
     /// <summary>
+    ///     Projectile acceleration per-path.
+    /// </summary>
+    public AccelerationDesc Acceleration { get => _acceleration; protected set => _acceleration = value; }
+
+    /// <summary>
     ///     Gets or sets the angle of this path segment.
     /// </summary>
     public float Angle
@@ -82,8 +91,64 @@ public class ProjectilePathSegment
     protected void ApplyModifiers(ref float elapsedLifetimeMs)
     {
         if (HasMod(PathSegmentModifier.Boomerang))
-            if (elapsedLifetimeMs > LifetimeMs / 2)
+            if (elapsedLifetimeMs > LifetimeMs / 2f)
                 elapsedLifetimeMs = LifetimeMs - elapsedLifetimeMs;
+    }
+
+    public void UpdateAcceleration(float elapsedLifetimeMs)
+    {
+        if (Acceleration == null)
+            return;
+
+        var elapsed = elapsedLifetimeMs - Acceleration.DelayMS;
+
+        if (elapsed < 0)
+            return;
+
+        if (Acceleration.CooldownMS <= 0)
+        {
+            if (_lastAccelerationStep >= 0)
+                return;
+
+            Speed += Acceleration.Acceleration;
+            _lastAccelerationStep = 0;
+
+            ClampAccelerationSpeed();
+            return;
+        }
+
+        var currentStep = (int)(elapsed / Acceleration.CooldownMS);
+
+        if (Acceleration.CooldownRepeat >= 0)
+        {
+            currentStep = Math.Min(
+                currentStep,
+                Acceleration.CooldownRepeat - 1
+            );
+        }
+
+        var applications = currentStep - _lastAccelerationStep;
+
+        if (applications <= 0)
+            return;
+
+        Speed += Acceleration.Acceleration * applications;
+
+        _lastAccelerationStep = currentStep;
+
+        ClampAccelerationSpeed();
+    }
+
+    private void ClampAccelerationSpeed()
+    {
+        if (Acceleration == null)
+            return;
+
+        if (!float.IsNaN(Acceleration.MinSpeed))
+            Speed = MathF.Max(Speed, Acceleration.MinSpeed);
+
+        if (!float.IsNaN(Acceleration.MaxSpeed))
+            Speed = MathF.Min(Speed, Acceleration.MaxSpeed);
     }
 
     /// <summary>
@@ -111,6 +176,7 @@ public class ProjectilePathSegment
     public virtual void Read(ref SpanReader rdr) {
         Speed = rdr.ReadSingle();
         LifetimeMs = rdr.ReadInt32();
+        Acceleration = new AccelerationDesc(ref rdr);
         _angle = rdr.ReadSingle();
         if (float.IsNaN(_angle.Value))
             _angle = null;
@@ -121,13 +187,10 @@ public class ProjectilePathSegment
     public static ProjectilePathSegment ReadNew(ref SpanReader rdr) {
         var type = (PathType)rdr.ReadByte();
         ProjectilePathSegment ret = type switch {
-            PathType.AcceleratePath => new AcceleratePath(),
             PathType.AmplitudePath => new AmplitudePath(),
             PathType.BoomerangPath => new BoomerangPath(),
-            PathType.ChangeSpeedPath => new ChangeSpeedPath(),
             PathType.CirclePath => new CirclePath(),
             PathType.CombinedPath => new CombinedPath(),
-            PathType.DeceleratePath => new DeceleratePath(),
             PathType.LinePath => new LinePath(),
             PathType.WavyPath => new WavyPath(),
             _ => null
@@ -142,9 +205,11 @@ public class ProjectilePathSegment
     ///     so we need a new instance.
     /// </summary>
     /// <returns>A new instance of the segment with the same values.</returns>
-    public virtual ProjectilePathSegment Clone()
-    {
-        return new ProjectilePathSegment(0, 0);
+    public virtual ProjectilePathSegment Clone() {
+        ProjectilePathSegment ret = new ProjectilePathSegment(0, 0);
+        ret.Acceleration = Acceleration.Clone();
+        ret._lastAccelerationStep = -1;
+        return ret;
     }
     
     public virtual void SetInfo(ProjectileInfo info)
@@ -157,43 +222,47 @@ public class ProjectilePathSegment
         if (pathElement == null)
             return new LinePath(10, null, 100);
 
-        var pathName = pathElement.Value;
+        var type = pathElement.Value.Trim();
         var lifeTimeMs = pathElement.GetAttribute<int>("lifetimeMs");
-        switch (pathName)
+        var acceleration = pathElement.HasElement("Acceleration") ? new AccelerationDesc(pathElement.Element("Acceleration")) : null;
+        
+        switch (type)
         {
             case "Line":
                 var speed = pathElement.GetAttribute<float>("speed");
-                return new LinePath(speed, null, lifeTimeMs);
+                return new LinePath(speed, null, lifeTimeMs, acceleration);
             case "Wavy":
                 speed = pathElement.GetAttribute<float>("speed");
-                return new WavyPath(speed, null, lifeTimeMs);
+                return new WavyPath(speed, null, lifeTimeMs, acceleration);
             case "Boomerang":
                 speed = pathElement.GetAttribute<float>("speed");
-                return new BoomerangPath(speed, null, lifeTimeMs);
+                return new BoomerangPath(speed, null, lifeTimeMs, acceleration);
             case "Circle":
                 var rps = pathElement.GetAttribute<float>("rotationsPerSecond");
                 var radius = pathElement.GetAttribute<float>("radius");
-                return new CirclePath(rps, radius, null, lifeTimeMs);
+                return new CirclePath(rps, radius, null, lifeTimeMs, acceleration);
             case "Amplitude":
                 speed = pathElement.GetAttribute<float>("speed");
                 var amplitude = pathElement.GetAttribute<float>("amplitude");
                 var frequency = pathElement.GetAttribute<float>("frequency");
-                return new AmplitudePath(speed, amplitude, frequency, null, lifeTimeMs);
+                return new AmplitudePath(speed, amplitude, frequency, null, lifeTimeMs, acceleration);
+            /*
             case "Accelerate":
                 speed = pathElement.GetAttribute<float>("speed");
                 return new AcceleratePath(speed, null, lifeTimeMs);
-            case "Decelerate":
+            */
+            /*case "Decelerate":
                 speed = pathElement.GetAttribute<float>("speed");
-                return new DeceleratePath(speed, null, lifeTimeMs);
-            case "ChangeSpeed":
+                return new DeceleratePath(speed, null, lifeTimeMs);*/
+            /*case "ChangeSpeed":
                 speed = pathElement.GetAttribute<float>("speed");
                 var inc = pathElement.GetAttribute<float>("inc");
                 var cooldown = pathElement.GetAttribute<int>("cooldown");
                 var cooldownOffset = pathElement.GetAttribute<int>("cooldownOffset");
                 var repeat = pathElement.GetAttribute<int>("repeat");
-                return new ChangeSpeedPath(speed, inc, cooldown, null, lifeTimeMs, cooldownOffset, repeat);
+                return new ChangeSpeedPath(speed, inc, cooldown, null, lifeTimeMs, cooldownOffset, repeat);*/
         }
-
+        
         return null;
     }
     
@@ -252,6 +321,7 @@ public struct ProjectileInfo
     public Vector2 StartPos;
     public float ShootAngle;
     public int LifetimeMs;
+    public AccelerationDesc Acceleration;
     public int ProjId;
     public long StartTime;
 }

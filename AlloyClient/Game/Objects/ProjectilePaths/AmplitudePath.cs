@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using AlloyClient.Assets.XmlStructs;
 using OpenTK.Mathematics;
 using AlloyClient.Networking;
 
@@ -15,8 +16,8 @@ public class AmplitudePath : ProjectilePathSegment
 
     public AmplitudePath() : base(PathType.AmplitudePath) { }
 
-    public AmplitudePath(float speed, float amplitude, float frequency, float? angle = null, int? lifetimeMs = null, int? timeOffset = null, params PathSegmentModifier[] mods)
-        : base(PathType.AmplitudePath, speed, angle, lifetimeMs, timeOffset, mods)
+    public AmplitudePath(float speed, float amplitude, float frequency, float? angle = null, int? lifetimeMs = null, AccelerationDesc acceleration = null, int? timeOffset = null, params PathSegmentModifier[] mods)
+        : base(PathType.AmplitudePath, speed, angle, lifetimeMs, acceleration, timeOffset, mods)
     {
         this.amplitude = amplitude;
         this.frequency = frequency;
@@ -52,6 +53,6 @@ public class AmplitudePath : ProjectilePathSegment
 
     public override ProjectilePathSegment Clone()
     {
-        return new AmplitudePath(Speed, amplitude, frequency, _angle, _lifetimeMs, TimeOffset);
+        return new AmplitudePath(Speed, amplitude, frequency, _angle, _lifetimeMs, Acceleration, TimeOffset);
     }
 }

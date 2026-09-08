@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using AlloyClient.Assets.XmlStructs;
 using OpenTK.Mathematics;
 
 #endregion
@@ -11,8 +12,8 @@ public class WavyPath : ProjectilePathSegment
 {
     public WavyPath() : base(PathType.WavyPath) { }
 
-    public WavyPath(float speed, float? angle = null, int? lifetimeMs = null, int? timeOffset = null, params PathSegmentModifier[] mods)
-        : base(PathType.WavyPath, speed, angle, lifetimeMs, timeOffset, mods)
+    public WavyPath(float speed, float? angle = null, int? lifetimeMs = null, AccelerationDesc acceleration = null, int? timeOffset = null, params PathSegmentModifier[] mods)
+        : base(PathType.WavyPath, speed, angle, lifetimeMs, acceleration, timeOffset, mods)
     { }
 
     public override Vector2 PositionAt(float elapsedLifetimeMs)
@@ -37,6 +38,6 @@ public class WavyPath : ProjectilePathSegment
 
     public override ProjectilePathSegment Clone()
     {
-        return new WavyPath(Speed, _angle, _lifetimeMs, TimeOffset);
+        return new WavyPath(Speed, _angle, _lifetimeMs, Acceleration, TimeOffset);
     }
 }

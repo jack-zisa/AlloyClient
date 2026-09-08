@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using AlloyClient.Assets.XmlStructs;
 using OpenTK.Mathematics;
 
 #endregion
@@ -11,8 +12,8 @@ public class LinePath : ProjectilePathSegment
 {
     public LinePath() : base(PathType.LinePath) { }
     
-    public LinePath(float speed, float? angle = null, int? lifetimeMs = null, int? timeOffset = null, params PathSegmentModifier[] mods)
-        : base(PathType.LinePath, speed, angle, lifetimeMs, timeOffset, mods)
+    public LinePath(float speed, float? angle = null, int? lifetimeMs = null, AccelerationDesc acceleration = null, int? timeOffset = null, params PathSegmentModifier[] mods)
+        : base(PathType.LinePath, speed, angle, lifetimeMs, acceleration, timeOffset, mods)
     { }
 
     public override Vector2 PositionAt(float elapsedLifetimeMs)
@@ -33,6 +34,6 @@ public class LinePath : ProjectilePathSegment
 
     public override ProjectilePathSegment Clone()
     {
-        return new LinePath(Speed, _angle, _lifetimeMs, TimeOffset);
+        return new LinePath(Speed, _angle, _lifetimeMs, Acceleration, TimeOffset);
     }
 }

@@ -67,9 +67,7 @@ public sealed class ProjectileProperties {
             Path = new ProjectilePath();
             foreach (var elem in e.Elements("Path"))
                 Path.RegisterSegment(ProjectilePathSegment.ParsePath(elem));
-        }
-        else
-            Path = ProjectilePathSegment.ParsePath(this).ToPath();
+        } else Path = ProjectilePathSegment.ParsePath(this).ToPath();
     }
 
     public static ProjectileProperties FromServer(ServerProjectileProps props) {

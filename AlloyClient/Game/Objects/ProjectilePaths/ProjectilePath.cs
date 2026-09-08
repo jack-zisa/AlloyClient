@@ -33,8 +33,7 @@ public class ProjectilePath
     /// <param name="projectilePathSegments">Collection of segments.</param>
     public ProjectilePath(List<ProjectilePathSegment> projectilePathSegments)
     {
-        foreach (var segment in projectilePathSegments)
-        {
+        foreach (var segment in projectilePathSegments) {
             this.projectilePathSegments.Add(segment.Clone());
             _lifetimeMs += segment.LifetimeMs;
         }
@@ -81,6 +80,7 @@ public class ProjectilePath
             segmentEnd += segment.LifetimeMs;
             if (relativeElapsed <= segmentEnd)
             {
+                segment.UpdateAcceleration(relativeElapsed - segmentsTotal);
                 var ret = segment.PositionAt(relativeElapsed - segmentsTotal); // Position offset relative to the segment start
                 // Console.WriteLine($"Segment pos: {ret} ({segment.Type}: {segment.Speed}, {segment.LifetimeMs}, {segment.Angle})");
                 return startPos + ret; // Position offset relative to the path start
@@ -131,8 +131,5 @@ public enum PathType : byte
     CirclePath,
     AmplitudePath,
     BoomerangPath,
-    AcceleratePath,
-    DeceleratePath,
-    ChangeSpeedPath,
     CombinedPath
 }
