@@ -10206,4 +10206,59 @@
         </Texture>
         <AngleCorrection>1</AngleCorrection>
     </Object>
+    <Object type="0x5294" id="Elder Heartwood Staff Projectile">
+        <Class>Projectile</Class>
+        <Texture>
+            <File>Equip8x8</File>
+            <Index>0x10</Index>
+        </Texture>
+        <AngleCorrection>1</AngleCorrection>
+    </Object>
+    <Object type="0x5295" id="The Right Hook Projectile">
+        <Class>Projectile</Class>
+        <Texture>
+            <File>Equip8x8</File>
+            <Index>0x70</Index>
+        </Texture>
+        <AngleCorrection>1</AngleCorrection>
+    </Object>
+    <Object type="0x5296" id="Clockwork Repeater Projectile">
+        <Class>Projectile</Class>
+        <Texture>
+            <File>Equip8x8</File>
+            <Index>0x90</Index>
+        </Texture>
+        <AngleCorrection>1</AngleCorrection>
+    </Object>
+    <Object type="0x5297" id="Warmonger Projectile">
+        <Class>Projectile</Class>
+        <Texture>
+            <File>Equip8x8</File>
+            <Index>0xd0</Index>
+        </Texture>
+        <AngleCorrection>1</AngleCorrection>
+    </Object>
+    <Object type="0x5298" id="Dusky Catalyst Projectile">
+        <Class>Projectile</Class>
+        <Texture>
+            <File>Equip8x8</File>
+            <Index>0xf0</Index>
+        </Texture>
+    </Object>
+    <Object type="0x5299" id="Atavistic Soul Sabre Projectile">
+        <Class>Projectile</Class>
+        <Texture>
+            <File>Equip8x8</File>
+            <Index>0x11</Index>
+        </Texture>
+        <AngleCorrection>1</AngleCorrection>
+    </Object>
+    <Object type="0x5300" id="Valor Projectile">
+        <Class>Projectile</Class>
+        <Texture>
+            <File>Equip8x8</File>
+            <Index>0x31</Index>
+        </Texture>
+        <AngleCorrection>1</AngleCorrection>
+    </Object>
 </Objects>

@@ -241,4 +241,7 @@
     <Animated name="xmasNexusChars8x8"             w="8"  h="8" >XmasNexusChars8x8.png</Animated>
     <Animated name="xmasNexusChars16x16"           w="16" h="16">XmasNexusChars16x16.png</Animated>
 
+    <!-- Custom Sheets -->
+    <Image name="Equip8x8"        w="8" h="8">Equip8x8.png</Image>
+
 </Atlas>

@@ -30949,4 +30949,195 @@
         <feedPower>600</feedPower>
         <Soulbound/>
     </Object>
+    <Object type="0x800" id="Elder Heartwood Staff">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+            <File>Equip8x8</File>
+            <Index>0x00</Index>
+        </Texture>
+        <SlotType>17</SlotType>
+        <Description>Carved from the heartwood of an ancient tree and imbued with the whispering spirits of the forest, this staff channels centuries of wisdom.</Description>
+        <RateOfFire>1.6</RateOfFire>
+        <Sound>weapon/fire_wand</Sound>
+        <Projectile>
+            <ObjectId>Elder Heartwood Staff Projectile</ObjectId>
+            <Speed>80</Speed>
+            <MinDamage>60</MinDamage>
+            <MaxDamage>115</MaxDamage>
+            <LifetimeMS>1200</LifetimeMS>
+            <Amplitude>0.3</Amplitude>
+            <Frequency>1.25</Frequency>
+        </Projectile>
+        <ActivateOnEquip stat="27" amount="4">IncrementStat</ActivateOnEquip>
+        <BagType>6</BagType>
+        <NumProjectiles>2</NumProjectiles>
+        <ArcGap>11.25</ArcGap>
+        <OldSound>magicShoot</OldSound>
+        <FameBonus>6</FameBonus>
+        <feedPower>800</feedPower>
+        <Soulbound/>
+    </Object>
+    <Object type="0x801" id="The Right Hook">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+            <File>Equip8x8</File>
+            <Index>0x60</Index>
+        </Texture>
+        <SlotType>2</SlotType>
+        <Description>A famous boxer once said the secret to their victory was having a great right hook, this dagger’s craftsman took that literally.</Description>
+        <RateOfFire>0.65</RateOfFire>
+        <Sound>weapon/blunt_dagger</Sound>
+        <Projectile>
+            <ObjectId>The Right Hook Projectile</ObjectId>
+            <Speed>140</Speed>
+            <MinDamage>215</MinDamage>
+            <MaxDamage>315</MaxDamage>
+            <LifetimeMS>435</LifetimeMS>
+            <Amplitude>-0.75</Amplitude>
+            <Frequency>0.5</Frequency>
+        </Projectile>
+        <ActivateOnEquip stat="26" amount="6">IncrementStat</ActivateOnEquip>
+        <BagType>6</BagType>
+        <NumProjectiles>1</NumProjectiles>
+        <OldSound>daggerSwing</OldSound>
+        <FameBonus>6</FameBonus>
+        <feedPower>950</feedPower>
+        <Soulbound/>
+    </Object>
+    <Object type="0x802" id="Clockwork Repeater">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+            <File>Equip8x8</File>
+            <Index>0x80</Index>
+        </Texture>
+        <SlotType>3</SlotType>
+        <Description>A bow of unbelievable weight, it takes multiple Kogbold Workers to fire a single arrow.</Description>
+        <RateOfFire>0.33</RateOfFire>
+        <Sound>weapon/golden_bow</Sound>
+        <Projectile>
+            <ObjectId>Clockwork Repeater Projectile</ObjectId>
+            <Speed>140</Speed>
+            <MinDamage>625</MinDamage>
+            <MaxDamage>700</MaxDamage>
+            <LifetimeMS>503</LifetimeMS>
+            <MultiHit/>
+        </Projectile>
+        <BagType>6</BagType>
+        <NumProjectiles>1</NumProjectiles>
+        <OldSound>arrowShoot</OldSound>
+        <FameBonus>8</FameBonus>
+        <feedPower>1400</feedPower>
+        <Soulbound/>
+    </Object>
+    <Object type="0x803" id="Warmonger">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+            <File>Equip8x8</File>
+            <Index>0xc0</Index>
+        </Texture>
+        <SlotType>3</SlotType>
+        <Description>Rarely brandished and in pristine condition, the old monarchy deemed this exquisite recurve too dignified for all but royalty to handle. Though it remains unproven in practical combat, this bow’s raw potential is unmatched, waiting to be drawn out through pure focus.</Description>
+        <RateOfFire>1.2</RateOfFire>
+        <Sound>weapon/golden_bow</Sound>
+        <Projectile>
+            <ObjectId>Warmonger Projectile</ObjectId>
+            <Speed>171</Speed>
+            <MinDamage>95</MinDamage>
+            <MaxDamage>110</MaxDamage>
+            <LifetimeMS>468</LifetimeMS>
+            <MultiHit/>
+            <PassesCover/>
+        </Projectile>
+        <ActivateOnEquip stat="26" amount="5">IncrementStat</ActivateOnEquip>
+        <BagType>6</BagType>
+        <NumProjectiles>2</NumProjectiles>
+        <ArcGap>7</ArcGap>
+        <OldSound>arrowShoot</OldSound>
+        <FameBonus>8</FameBonus>
+        <feedPower>1000</feedPower>
+        <Soulbound/>
+    </Object>
+    <Object type="0x804" id="Dusky Catalyst">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+            <File>Equip8x8</File>
+            <Index>0xe0</Index>
+        </Texture>
+        <SlotType>8</SlotType>
+        <Description>An untempered casting wand brought forth to tap into distant powers, but an imbalance rendered it too unreliable for most to dare use.</Description>
+        <RateOfFire>1.5</RateOfFire>
+        <Sound>weapon/wand_of_dark_magic</Sound>
+        <Projectile>
+            <ObjectId>Dusky Catalyst Projectile</ObjectId>
+            <Speed>200</Speed>
+            <MinDamage>100</MinDamage>
+            <MaxDamage>186</MaxDamage>
+            <LifetimeMS>400</LifetimeMS>
+            <MultiHit/>
+            <Wavy/>
+        </Projectile>
+        <ActivateOnEquip stat="27" amount="5">IncrementStat</ActivateOnEquip>
+        <BagType>6</BagType>
+        <NumProjectiles>1</NumProjectiles>
+        <OldSound>magicShoot</OldSound>
+        <FameBonus>8</FameBonus>
+        <feedPower>1000</feedPower>
+        <Soulbound/>
+    </Object>
+    <Object type="0x805" id="Atavistic Soul Sabre">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+            <File>Equip8x8</File>
+            <Index>0x01</Index>
+        </Texture>
+        <SlotType>1</SlotType>
+        <Description>An unbearably heavy sword said to harness the soul of a Kogboldian master craftsman.</Description>
+        <RateOfFire>0.6</RateOfFire>
+        <Sound>weapon/glass_sword</Sound>
+        <Projectile>
+            <ObjectId>Atavistic Soul Sabre Projectile</ObjectId>
+            <Speed>100</Speed>
+            <MinDamage>420</MinDamage>
+            <MaxDamage>475</MaxDamage>
+            <LifetimeMS>400</LifetimeMS>
+        </Projectile>
+        <BagType>6</BagType>
+        <FameBonus>8</FameBonus>
+        <OldSound>bladeSwing</OldSound>
+        <feedPower>1400</feedPower>
+        <Soulbound/>
+    </Object>
+    <Object type="0x806" id="Valor">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+            <File>Equip8x8</File>
+            <Index>0x21</Index>
+        </Texture>
+        <SlotType>24</SlotType>
+        <Tier>0</Tier>
+        <Description>Exceedingly large and challenging to handle, this titanic blade embodies the stoic might of its true owner.</Description>
+        <RateOfFire>0.45</RateOfFire>
+        <Sound>weapon/blunt_sword</Sound>
+        <Projectile>
+            <ObjectId>Valor Projectile</ObjectId>
+            <Speed>195</Speed>
+            <LifetimeMS>244</LifetimeMS>
+            <MinDamage>480</MinDamage>
+            <MaxDamage>555</MaxDamage>
+            <MultiHit/>
+        </Projectile>
+        <ActivateOnEquip stat="22" amount="5">IncrementStat</ActivateOnEquip>
+        <BagType>6</BagType>
+        <FameBonus>8</FameBonus>
+        <OldSound>bladeSwing</OldSound>
+        <feedPower>1000</feedPower>
+        <DropTradable/>
+    </Object>
 </Objects>
