@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Xml.Linq;
 using AlloyClient.Game.Objects.ProjectilePaths;
@@ -20,7 +21,7 @@ public sealed class ProjectileProperties {
     public int MinDamage {get; private set;}
     public int MaxDamage {get; private set;}
     public (Game.ConditionEffect, int)[] Effects {get; private set;}
-    public bool MultiHit {get; private set;}
+    public int MultiHit {get; private set;}
     public bool PassesCover {get; private set;}
     public bool ArmorPiercing {get; private set;}
     public bool HasParticleTrail {get; private set;}
@@ -46,7 +47,7 @@ public sealed class ProjectileProperties {
         MinDamage = e.HasElement("Damage") ? e.GetValue<int>("Damage") : e.GetValue<int>("MinDamage");
         MaxDamage = e.HasElement("Damage") ? e.GetValue<int>("Damage") : e.GetValue<int>("MaxDamage");
         Effects = e.Elements("ConditionEffect").Select(x => (Game.ConditionEffect.FromName(x.Value), (int)(x.GetAttribute<float>("duration") * 1000))).ToArray();
-        MultiHit = e.HasElement("MultiHit");
+        MultiHit = e.HasElement("MultiHit") ? e.GetAttribute<int>("value", -1) : 1;
         PassesCover = e.HasElement("PassesCover");
         ArmorPiercing = e.HasElement("ArmorPiercing");
         HasParticleTrail = e.HasElement("ParticleTrail");

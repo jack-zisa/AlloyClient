@@ -2,7 +2,6 @@
 using System.Threading;
 using AlloyClient.Assets.Libraries;
 using AlloyClient.Assets.XmlStructs;
-using AlloyClient.Game;
 
 namespace AlloyClient.Networking.Packets.Incoming;
 
@@ -15,7 +14,7 @@ public class ServerProjectileProps : IncomingPacket<ServerProjectileProps> {
     public byte ProjId;
     public string ObjectId;
     public float Lifetime;
-    public bool MultiHit;
+    public int MultiHit;
     public bool PassesCover;
     public bool ArmorPiercing;
     public int Size;
@@ -28,7 +27,7 @@ public class ServerProjectileProps : IncomingPacket<ServerProjectileProps> {
         ProjId = 0;
         ObjectId = null;
         Lifetime = 0;
-        MultiHit = false;
+        MultiHit = 1;
         PassesCover = false;
         ArmorPiercing = false;
         Size = 0;
@@ -41,7 +40,7 @@ public class ServerProjectileProps : IncomingPacket<ServerProjectileProps> {
         ProjId = reader.ReadByte();
         ObjectId = reader.ReadUTF();
         Lifetime = reader.ReadSingle();
-        MultiHit = reader.ReadBoolean();
+        MultiHit = reader.ReadInt32();
         PassesCover = reader.ReadBoolean();
         ArmorPiercing = reader.ReadBoolean();
         Size = reader.ReadInt32();

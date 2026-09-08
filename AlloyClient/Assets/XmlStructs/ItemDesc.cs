@@ -103,7 +103,7 @@ public class ProjectileDesc {
     public readonly int MaxDamage;
     public readonly int LifetimeMS;
     public readonly ParticleTrailDesc Trail;
-    public readonly bool MultiHit;
+    public readonly int MultiHit;
     public readonly bool PassesCover;
     public readonly bool Parametric;
     public readonly bool Boomerang;
@@ -135,7 +135,7 @@ public class ProjectileDesc {
         
         Trail = xml.HasElement("ParticleTrail") ? new ParticleTrailDesc(xml.Element("ParticleTrail")) : null;
 
-        MultiHit = xml.HasElement("MultiHit");
+        MultiHit = xml.HasElement("MultiHit") ? xml.GetAttribute<int>("value", -1) : 1;
         PassesCover = xml.HasElement("PassesCover");
         ArmorPiercing = xml.HasElement("ArmorPiercing");
         Wavy = xml.HasElement("Wavy");

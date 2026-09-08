@@ -88,7 +88,7 @@ public sealed class Projectile : IResettable { // TODO: make struct
     private float _size; // readonly
     private float _angleCorrection; // readonly
     private float _rotationSpeed; // readonly
-    private bool _multiHit; // readonly
+    private int _multiHit; // readonly
     private bool _passesCover; // readonly
     private bool _noRotation; // readonly
     private bool _hasTrail; // readonly
@@ -97,7 +97,7 @@ public sealed class Projectile : IResettable { // TODO: make struct
     private float _rotation;
     private float _elapsed; // double
     private Vector2 _position;
-    private bool _hasHit;
+    private int _hits;
     
     public void Reset(ushort id, int dmg, float angle, Entity entity, ObjectProperties objDesc, ProjectileProperties projDesc, ProjectilePath path, Vector2 startPos) {
         Path = path ?? projDesc.Path.Clone();
@@ -117,14 +117,14 @@ public sealed class Projectile : IResettable { // TODO: make struct
         _noRotation = projDesc.NoRotation;
         _hasTrail = projDesc.HasParticleTrail;
         _particleTrail = projDesc.ParticleTrail;
-        _hasHit = false;
+        _hits = 0;
     }
 
     public bool IsInPool { get; set; }
 
     public void Reset() {
         Path = null;
-        _hasHit = false;
+        _hits = 0;
         
         /* === temp === */
         _elapsed = 0;
@@ -135,8 +135,12 @@ public sealed class Projectile : IResettable { // TODO: make struct
         return textureData.HasAnimationData ? textureData.AnimatedTextures.FaceRight[0] : textureData.GetTexture();
     }
 
+    public bool HasHit() {
+        return _multiHit >= 0 && _hits >= _multiHit;
+    }
+
     public bool Update(in GameTime gameTime) {
-        if (_hasHit)
+        if (HasHit())
             return false;
         
         _elapsed += (float)gameTime.ElapsedMs;
@@ -161,7 +165,7 @@ public sealed class Projectile : IResettable { // TODO: make struct
     }
 
     public void FixedUpdate(in GameTime gameTime) {
-        if (_hasHit)
+        if (HasHit())
             return;
         
         if (HitTest(gameTime.TotalMs)) {
@@ -214,8 +218,8 @@ public sealed class Projectile : IResettable { // TODO: make struct
                 return false;
             }
             
-            if (!_multiHit)
-                _hasHit = true;
+            if (!HasHit())
+                _hits++;
             
             Map.AddParticleEffect(new HitEffect(target, 0xFF0000));
             NotificationLayer.AddStatusText(target, $"-{_damage}", 0xFF0000, 1000, 0);
@@ -226,7 +230,7 @@ public sealed class Projectile : IResettable { // TODO: make struct
             
             Client.QueuePacket(hit);
 
-            if (!_multiHit) {
+            if (!HasHit()) {
                 return true;
             }
 
@@ -240,8 +244,8 @@ public sealed class Projectile : IResettable { // TODO: make struct
             return false;
         }
         
-        if (!_multiHit)
-            _hasHit = true;
+        if (!HasHit())
+            _hits++;
 
         Map.AddParticleEffect(new HitEffect(enemy, 0xFF0000));
         NotificationLayer.AddStatusText(enemy, $"-{_damage}", 0xFF0000, 1000, 0);
@@ -252,7 +256,7 @@ public sealed class Projectile : IResettable { // TODO: make struct
         
         Client.QueuePacket(hit1);
         
-        if (!_multiHit) {
+        if (!HasHit()) {
             return true;
         }
 
