@@ -207,11 +207,7 @@ public sealed class Projectile : IResettable { // TODO: make struct
     }
     
     private bool HitTest(double time) {
-        if (_hasHit)
-            return false;
-
         if (_damagePlayers) {
-
             var target = EntityUtils.GetClosestPlayer(_position, 0.5f);
 
             if (target == null || target.MultiHitUsed.ContainsKey(_key)) {
