@@ -64,6 +64,10 @@ public sealed class InteractPanel : Sprite {
         
         AddChild(_currentPanel);
     }
+
+    public Panel GetCurrentPanel() {
+        return _currentPanel;
+    }
     
     public static bool IsInteractiveObject(Entity entity) {
         return entity.Properties.Class switch {

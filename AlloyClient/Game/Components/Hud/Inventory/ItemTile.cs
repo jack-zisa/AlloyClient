@@ -10,7 +10,7 @@ using Alloy.UiLib.BuiltIn;
 using Alloy.UiLib.Core;
 using Alloy.UiLib.Extra;
 using AlloyClient.Utils;
-using Alloy.Common;
+using AlloyClient.Game.Components.Hud.Panels;
 using AlloyClient.Ui;
 using OpenTK.Mathematics;
 
@@ -319,12 +319,19 @@ public sealed class ItemTile : Sprite {
                 tile.SetItem(tile.ItemDesc);
                 
                 break; // swap
-            case InventoryGrid grid:
-                break; // add to first free slot
-            case GameScreen:
+            case GameScreen gameScreen:
+                var owner = Owner;
+                
+                ContainerPanel container;
+                if ((container = gameScreen.GetHud().GetContainerInventory()) != null) {
+                    container.AddItem(ItemDesc);
+                    SetItem(null);
+                    break;
+                }
+                
                 var drop = InvDrop.CreatePacket();
                 drop.SlotObject = new ObjectSlot {
-                    ObjectId = Owner.ObjectId,
+                    ObjectId = owner.ObjectId,
                     SlotId = SlotId
                 };
                 

@@ -1,6 +1,7 @@
 ﻿using AlloyClient.Game.Components.Hud.Inventory;
 using Alloy.UiLib.BuiltIn;
 using Alloy.UiLib.Core;
+using AlloyClient.Game.Components.Hud.Panels;
 
 namespace AlloyClient.Game.Components.Hud;
 
@@ -64,6 +65,10 @@ public sealed class HudView : Sprite {
 
     public EquippedGrid GetHotbarInventory() {
         return _equippedGrid;
+    }
+
+    public ContainerPanel GetContainerInventory() {
+        return _interactPanel.GetCurrentPanel() as ContainerPanel;
     }
 
     public TabStrip GetTabs() {
