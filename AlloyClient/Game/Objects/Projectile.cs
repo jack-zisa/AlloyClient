@@ -197,7 +197,8 @@ public sealed class Projectile : IResettable { // TODO: make struct
             if (tile.OccupiedObject != null) {
                 var obj = tile.OccupiedObject.Properties;
                 if ((!obj.IsEnemy || _damagePlayers) && (obj.EnemyOccupySquare || !_passesCover && obj.OccupySquare)) {
-                    return false; // TODO: hit effect
+                    Map.AddParticleEffect(new HitEffect(tile.OccupiedObject, tile.TextureData.DominantColor));
+                    return false;
                 }
             }
         }
