@@ -10210,7 +10210,7 @@
         <Class>Projectile</Class>
         <Texture>
             <File>Equip8x8</File>
-            <Index>0x10</Index>
+            <Index>0x01</Index>
         </Texture>
         <AngleCorrection>1</AngleCorrection>
     </Object>
@@ -10218,7 +10218,7 @@
         <Class>Projectile</Class>
         <Texture>
             <File>Equip8x8</File>
-            <Index>0x70</Index>
+            <Index>0x07</Index>
         </Texture>
         <AngleCorrection>1</AngleCorrection>
     </Object>
@@ -10226,7 +10226,7 @@
         <Class>Projectile</Class>
         <Texture>
             <File>Equip8x8</File>
-            <Index>0x90</Index>
+            <Index>0x09</Index>
         </Texture>
         <AngleCorrection>1</AngleCorrection>
     </Object>
@@ -10234,7 +10234,7 @@
         <Class>Projectile</Class>
         <Texture>
             <File>Equip8x8</File>
-            <Index>0xd0</Index>
+            <Index>0x0d</Index>
         </Texture>
         <AngleCorrection>1</AngleCorrection>
     </Object>
@@ -10242,7 +10242,7 @@
         <Class>Projectile</Class>
         <Texture>
             <File>Equip8x8</File>
-            <Index>0xf0</Index>
+            <Index>0x0f</Index>
         </Texture>
     </Object>
     <Object type="0x5299" id="Atavistic Soul Sabre Projectile">
@@ -10257,7 +10257,15 @@
         <Class>Projectile</Class>
         <Texture>
             <File>Equip8x8</File>
-            <Index>0x31</Index>
+            <Index>0x13</Index>
+        </Texture>
+        <AngleCorrection>1</AngleCorrection>
+    </Object>
+    <Object type="0x5301" id="Bramble Bow Projectile">
+        <Class>Projectile</Class>
+        <Texture>
+            <File>Equip8x8</File>
+            <Index>0x15</Index>
         </Texture>
         <AngleCorrection>1</AngleCorrection>
     </Object>
