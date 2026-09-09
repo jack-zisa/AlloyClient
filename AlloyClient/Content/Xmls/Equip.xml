@@ -1264,7 +1264,7 @@
         <SlotType>6</SlotType>
         <Tier>1</Tier>
         <Description>Leather armor fashioned from wolf pelts.</Description>
-        <ActivateOnEquip stat="8" amount="5">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="5">IncrementStat</ActivateOnEquip>
         <BagType>1</BagType>
         <feedPower>7</feedPower>
         <DropTradable/>
@@ -1279,7 +1279,7 @@
         <SlotType>6</SlotType>
         <Tier>2</Tier>
         <Description>Armor made of hardened leather.</Description>
-        <ActivateOnEquip stat="8" amount="6">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="6">IncrementStat</ActivateOnEquip>
         <BagType>1</BagType>
         <feedPower>9</feedPower>
         <DropTradable/>
@@ -1294,7 +1294,8 @@
         <SlotType>6</SlotType>
         <Tier>3</Tier>
         <Description>Leather armor made from the skin of a magical lizard.</Description>
-        <ActivateOnEquip stat="8" amount="7">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="7">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="28" amount="1">IncrementStat</ActivateOnEquip>
         <BagType>1</BagType>
         <feedPower>14</feedPower>
         <DropTradable/>
@@ -1309,8 +1310,8 @@
         <SlotType>6</SlotType>
         <Tier>4</Tier>
         <Description>Leather armor made from the tough hide of a minotaur.</Description>
-        <ActivateOnEquip stat="8" amount="8">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="9" amount="2">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="8">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="28" amount="2">IncrementStat</ActivateOnEquip>
         <BagType>1</BagType>
         <feedPower>20</feedPower>
         <DropTradable/>
@@ -1325,8 +1326,8 @@
         <SlotType>6</SlotType>
         <Tier>5</Tier>
         <Description>Armor made from the thick leather of a dire bear.</Description>
-        <ActivateOnEquip stat="8" amount="9">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="9" amount="4">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="9">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="28" amount="4">IncrementStat</ActivateOnEquip>
         <BagType>1</BagType>
         <feedPower>27</feedPower>
         <DropTradable/>
@@ -1341,8 +1342,8 @@
         <SlotType>6</SlotType>
         <Tier>6</Tier>
         <Description>Magically protective leather armor made from chimera hides.</Description>
-        <ActivateOnEquip stat="8" amount="10">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="9" amount="6">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="10">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="28" amount="6">IncrementStat</ActivateOnEquip>
         <BagType>1</BagType>
         <feedPower>39</feedPower>
         <DropTradable/>
@@ -1357,8 +1358,8 @@
         <SlotType>6</SlotType>
         <Tier>7</Tier>
         <Description>Tough, durable armor made from wyvern leather.</Description>
-        <ActivateOnEquip stat="8" amount="12">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="9" amount="6">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="12">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="28" amount="6">IncrementStat</ActivateOnEquip>
         <BagType>2</BagType>
         <feedPower>55</feedPower>
         <DropTradable/>
@@ -1373,8 +1374,8 @@
         <SlotType>6</SlotType>
         <Tier>8</Tier>
         <Description>Leather armor studded with metal rivets that provide extra protection.</Description>
-        <ActivateOnEquip stat="8" amount="13">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="9" amount="8">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="13">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="28" amount="8">IncrementStat</ActivateOnEquip>
         <BagType>2</BagType>
         <FameBonus>1</FameBonus>
         <feedPower>77</feedPower>
@@ -1408,8 +1409,8 @@
         <SlotType>6</SlotType>
         <Tier>9</Tier>
         <Description>Leather armor fashioned from the scaly skin of a fire breathing drake.</Description>
-        <ActivateOnEquip stat="8" amount="14">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="9" amount="10">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="14">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="28" amount="10">IncrementStat</ActivateOnEquip>
         <BagType>2</BagType>
         <FameBonus>1</FameBonus>
         <feedPower>110</feedPower>
@@ -1425,8 +1426,8 @@
         <SlotType>6</SlotType>
         <Tier>10</Tier>
         <Description>Leather armor made from the durable hide of a roc.</Description>
-        <ActivateOnEquip stat="8" amount="15">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="9" amount="10">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="15">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="28" amount="10">IncrementStat</ActivateOnEquip>
         <BagType>4</BagType>
         <FameBonus>2</FameBonus>
         <feedPower>155</feedPower>
@@ -1442,8 +1443,8 @@
         <SlotType>6</SlotType>
         <Tier>11</Tier>
         <Description>Leather armor made from the protective skin of hippogriffs.</Description>
-        <ActivateOnEquip stat="8" amount="16">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="9" amount="12">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="16">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="28" amount="12">IncrementStat</ActivateOnEquip>
         <BagType>4</BagType>
         <FameBonus>3</FameBonus>
         <feedPower>218</feedPower>
@@ -1458,8 +1459,8 @@
         <SlotType>6</SlotType>
         <Tier>12</Tier>
         <Description>Superior leather armor made from the magical hide of a griffon.</Description>
-        <ActivateOnEquip stat="8" amount="17">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="9" amount="14">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="17">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="28" amount="14">IncrementStat</ActivateOnEquip>
         <BagType>4</BagType>
         <FameBonus>4</FameBonus>
         <feedPower>308</feedPower>
@@ -1475,8 +1476,8 @@
         </Texture>
         <SlotType>6</SlotType>
         <Tier>13</Tier>
-        <ActivateOnEquip stat="8" amount="18">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="9" amount="16">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="18">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="28" amount="16">IncrementStat</ActivateOnEquip>
         <BagType>4</BagType>
         <FameBonus>4</FameBonus>
         <feedPower>435</feedPower>
@@ -1492,8 +1493,8 @@
         <Tier>14</Tier>
         <Description>Outstanding leather armor made from the virtually impregnable hide of a great desert wyrm.
         </Description>
-        <ActivateOnEquip stat="8" amount="19">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="9" amount="18">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="19">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="28" amount="18">IncrementStat</ActivateOnEquip>
         <BagType>9</BagType>
         <FameBonus>5</FameBonus>
         <feedPower>650</feedPower>
@@ -1511,8 +1512,8 @@
         <Description>Magnificent leather armor made from the hide of the great leviathan, slain hundreds of years ago in
             a savage battle in the vast deeps.
         </Description>
-        <ActivateOnEquip stat="8" amount="21">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="9" amount="20">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="21">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="28" amount="20">IncrementStat</ActivateOnEquip>
         <BagType>9</BagType>
         <FameBonus>6</FameBonus>
         <feedPower>950</feedPower>
@@ -1528,8 +1529,7 @@
         <SlotType>7</SlotType>
         <Tier>1</Tier>
         <Description>Armor made from interlocking iron links.</Description>
-        <ActivateOnEquip stat="8" amount="7">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="0" amount="10">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="7">IncrementStat</ActivateOnEquip>
         <BagType>1</BagType>
         <feedPower>7</feedPower>
         <DropTradable/>
@@ -1544,8 +1544,7 @@
         <SlotType>7</SlotType>
         <Tier>2</Tier>
         <Description>Armor made from interlocking links of metal.</Description>
-        <ActivateOnEquip stat="8" amount="8">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="0" amount="15">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="8">IncrementStat</ActivateOnEquip>
         <BagType>1</BagType>
         <feedPower>9</feedPower>
         <DropTradable/>
@@ -1560,8 +1559,7 @@
         <SlotType>7</SlotType>
         <Tier>3</Tier>
         <Description>Mail made from blued steel.</Description>
-        <ActivateOnEquip stat="8" amount="9">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="0" amount="20">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="9">IncrementStat</ActivateOnEquip>
         <BagType>1</BagType>
         <feedPower>14</feedPower>
         <DropTradable/>
@@ -1576,8 +1574,7 @@
         <SlotType>7</SlotType>
         <Tier>4</Tier>
         <Description>Well-made chainmail plated with silver.</Description>
-        <ActivateOnEquip stat="8" amount="10">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="0" amount="25">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="10">IncrementStat</ActivateOnEquip>
         <BagType>1</BagType>
         <feedPower>20</feedPower>
         <DropTradable/>
@@ -1592,8 +1589,7 @@
         <SlotType>7</SlotType>
         <Tier>5</Tier>
         <Description>Well-made chainmail plated with gold, clearly intended for the use of a great lord.</Description>
-        <ActivateOnEquip stat="8" amount="12">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="0" amount="30">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="12">IncrementStat</ActivateOnEquip>
         <BagType>1</BagType>
         <feedPower>27</feedPower>
         <DropTradable/>
@@ -1608,8 +1604,7 @@
         <SlotType>7</SlotType>
         <Tier>6</Tier>
         <Description>Armor made from overlapping plates of metal.</Description>
-        <ActivateOnEquip stat="8" amount="14">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="0" amount="35">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="14">IncrementStat</ActivateOnEquip>
         <BagType>1</BagType>
         <feedPower>39</feedPower>
         <DropTradable/>
@@ -1624,8 +1619,7 @@
         <SlotType>7</SlotType>
         <Tier>7</Tier>
         <Description>Chainmail made with reinforcing mithril ribs.</Description>
-        <ActivateOnEquip stat="8" amount="15">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="0" amount="40">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="15">IncrementStat</ActivateOnEquip>
         <BagType>2</BagType>
         <feedPower>55</feedPower>
         <DropTradable/>
@@ -1640,8 +1634,7 @@
         <SlotType>7</SlotType>
         <Tier>8</Tier>
         <Description>Armor made from the strongest and most desirable of all metals.</Description>
-        <ActivateOnEquip stat="8" amount="16">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="0" amount="45">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="16">IncrementStat</ActivateOnEquip>
         <BagType>2</BagType>
         <FameBonus>1</FameBonus>
         <feedPower>77</feedPower>
@@ -1657,8 +1650,7 @@
         <SlotType>7</SlotType>
         <Tier>9</Tier>
         <Description>Armor made from the scales of a full grown dragon.</Description>
-        <ActivateOnEquip stat="8" amount="20">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="0" amount="50">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="20">IncrementStat</ActivateOnEquip>
         <BagType>2</BagType>
         <FameBonus>1</FameBonus>
         <feedPower>110</feedPower>
@@ -1674,8 +1666,7 @@
         <SlotType>7</SlotType>
         <Tier>10</Tier>
         <Description>Magical cold plate armor inscribed with tales of destruction and murder.</Description>
-        <ActivateOnEquip stat="8" amount="21">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="0" amount="55">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="21">IncrementStat</ActivateOnEquip>
         <BagType>4</BagType>
         <FameBonus>2</FameBonus>
         <feedPower>155</feedPower>
@@ -1691,8 +1682,7 @@
         <SlotType>7</SlotType>
         <Tier>11</Tier>
         <Description>Tremendously strong plate armor shrouded by an aura of demonic revenge.</Description>
-        <ActivateOnEquip stat="8" amount="22">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="0" amount="60">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="22">IncrementStat</ActivateOnEquip>
         <BagType>4</BagType>
         <FameBonus>3</FameBonus>
         <feedPower>218</feedPower>
@@ -1707,8 +1697,7 @@
         <SlotType>7</SlotType>
         <Tier>12</Tier>
         <Description>Mighty felplate armor designed for the most powerful of demon lords.</Description>
-        <ActivateOnEquip stat="8" amount="24">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="0" amount="65">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="24">IncrementStat</ActivateOnEquip>
         <BagType>4</BagType>
         <FameBonus>4</FameBonus>
         <feedPower>308</feedPower>
@@ -1724,8 +1713,7 @@
         <Tier>13</Tier>
         <Description>Indestructible magical armor made for the elite stoneborn champions of the eastern citadels.
         </Description>
-        <ActivateOnEquip stat="8" amount="26">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="0" amount="70">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="26">IncrementStat</ActivateOnEquip>
         <BagType>4</BagType>
         <FameBonus>4</FameBonus>
         <feedPower>435</feedPower>
@@ -1742,8 +1730,7 @@
         <Description>Exquisitely decorated adamantine armor smithed by underdeep dwarves for the wardens of the
             demonclefts.
         </Description>
-        <ActivateOnEquip stat="8" amount="28">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="0" amount="75">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="28">IncrementStat</ActivateOnEquip>
         <BagType>9</BagType>
         <FameBonus>5</FameBonus>
         <feedPower>650</feedPower>
@@ -1760,8 +1747,7 @@
         <Tier>15</Tier>
         <Description>Impenetrable forceplate armor worn by the blackguard conquerors of the necromantic uprising.
         </Description>
-        <ActivateOnEquip stat="8" amount="30">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="0" amount="80">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="30">IncrementStat</ActivateOnEquip>
         <BagType>9</BagType>
         <FameBonus>6</FameBonus>
         <feedPower>950</feedPower>
@@ -4561,7 +4547,7 @@
         <SlotType>9</SlotType>
         <Tier>6</Tier>
         <Description>An immaculately perfect emerald embedded in an exquisite gold ring.</Description>
-        <ActivateOnEquip stat="4" amount="10">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="22" amount="10">IncrementStat</ActivateOnEquip>
         <BagType>9</BagType>
         <FameBonus>5</FameBonus>
         <feedPower>325</feedPower>
@@ -4657,7 +4643,7 @@
         <FameBonus>5</FameBonus>
         <feedPower>325</feedPower>
     </Object>
-    <Object type="0xbb3" id="Ring of Transcendent Attack">
+    <Object type="0x9100" id="Ring of Transcendent Attack">
         <Class>Equipment</Class>
         <Item/>
         <Texture>
@@ -4672,7 +4658,7 @@
         <FameBonus>5</FameBonus>
         <feedPower>325</feedPower>
     </Object>
-    <Object type="0xbb4" id="Ring of Transcendent Defense">
+    <Object type="0x9101" id="Ring of Transcendent Defense">
         <Class>Equipment</Class>
         <Item/>
         <Texture>
@@ -4687,7 +4673,7 @@
         <FameBonus>5</FameBonus>
         <feedPower>325</feedPower>
     </Object>
-    <Object type="0xbb5" id="Ring of Transcendent Speed">
+    <Object type="0x9102" id="Ring of Transcendent Speed">
         <Class>Equipment</Class>
         <Item/>
         <Texture>
@@ -4697,12 +4683,12 @@
         <SlotType>9</SlotType>
         <Tier>7</Tier>
         <Description>An impeccably pristine emerald embedded in an enchanted gold ring.</Description>
-        <ActivateOnEquip stat="4" amount="11">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="22" amount="11">IncrementStat</ActivateOnEquip>
         <BagType>9</BagType>
         <FameBonus>5</FameBonus>
         <feedPower>325</feedPower>
     </Object>
-    <Object type="0xbb6" id="Ring of Transcendent Vitality">
+    <Object type="0x9103" id="Ring of Transcendent Vitality">
         <Class>Equipment</Class>
         <Item/>
         <Texture>
@@ -4717,7 +4703,7 @@
         <FameBonus>5</FameBonus>
         <feedPower>325</feedPower>
     </Object>
-    <Object type="0xbb7" id="Ring of Transcendent Wisdom">
+    <Object type="0x9104" id="Ring of Transcendent Wisdom">
         <Class>Equipment</Class>
         <Item/>
         <Texture>
@@ -4732,7 +4718,7 @@
         <FameBonus>5</FameBonus>
         <feedPower>325</feedPower>
     </Object>
-    <Object type="0xbb8" id="Ring of Transcendent Dexterity">
+    <Object type="0x9105" id="Ring of Transcendent Dexterity">
         <Class>Equipment</Class>
         <Item/>
         <Texture>
@@ -4747,7 +4733,7 @@
         <FameBonus>5</FameBonus>
         <feedPower>325</feedPower>
     </Object>
-    <Object type="0xbb9" id="Ring of Transcendent Health">
+    <Object type="0x9106" id="Ring of Transcendent Health">
         <Class>Equipment</Class>
         <Item/>
         <Texture>
@@ -4762,7 +4748,7 @@
         <FameBonus>5</FameBonus>
         <feedPower>325</feedPower>
     </Object>
-    <Object type="0xbba" id="Ring of Transcendent Magic">
+    <Object type="0x9107" id="Ring of Transcendent Magic">
         <Class>Equipment</Class>
         <Item/>
         <Texture>
@@ -5783,7 +5769,7 @@
         <SlotType>14</SlotType>
         <Tier>1</Tier>
         <Description>A long woolen robe favored by students of magic.</Description>
-        <ActivateOnEquip stat="8" amount="2">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="2">IncrementStat</ActivateOnEquip>
         <BagType>1</BagType>
         <feedPower>7</feedPower>
         <DropTradable/>
@@ -5798,8 +5784,8 @@
         <SlotType>14</SlotType>
         <Tier>2</Tier>
         <Description>A robe woven of rare yellow silk.</Description>
-        <ActivateOnEquip stat="8" amount="3">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="7" amount="1">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="3">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="1">IncrementStat</ActivateOnEquip>
         <BagType>1</BagType>
         <feedPower>9</feedPower>
         <DropTradable/>
@@ -5814,8 +5800,8 @@
         <SlotType>14</SlotType>
         <Tier>3</Tier>
         <Description>A well-made robe of enchanted blue silk.</Description>
-        <ActivateOnEquip stat="8" amount="4">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="7" amount="1">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="4">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="1">IncrementStat</ActivateOnEquip>
         <BagType>1</BagType>
         <feedPower>14</feedPower>
         <DropTradable/>
@@ -5830,8 +5816,8 @@
         <SlotType>14</SlotType>
         <Tier>4</Tier>
         <Description>A magical robe of faintly glowing wizardcloth.</Description>
-        <ActivateOnEquip stat="8" amount="5">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="7" amount="2">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="5">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="2">IncrementStat</ActivateOnEquip>
         <BagType>1</BagType>
         <feedPower>20</feedPower>
         <DropTradable/>
@@ -5846,8 +5832,8 @@
         <SlotType>14</SlotType>
         <Tier>5</Tier>
         <Description>A magical robe of gray moonsilk.</Description>
-        <ActivateOnEquip stat="8" amount="6">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="7" amount="2">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="6">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="2">IncrementStat</ActivateOnEquip>
         <BagType>1</BagType>
         <feedPower>27</feedPower>
         <DropTradable/>
@@ -5862,8 +5848,8 @@
         <SlotType>14</SlotType>
         <Tier>6</Tier>
         <Description>An enchanted robe of dark moonweave.</Description>
-        <ActivateOnEquip stat="8" amount="7">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="7" amount="3">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="7">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="3">IncrementStat</ActivateOnEquip>
         <BagType>1</BagType>
         <feedPower>39</feedPower>
         <DropTradable/>
@@ -5878,8 +5864,8 @@
         <SlotType>14</SlotType>
         <Tier>7</Tier>
         <Description>A powerful robe of delicately embroidered red feythread.</Description>
-        <ActivateOnEquip stat="8" amount="8">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="7" amount="3">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="8">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="3">IncrementStat</ActivateOnEquip>
         <BagType>2</BagType>
         <feedPower>55</feedPower>
         <DropTradable/>
@@ -5894,8 +5880,8 @@
         <SlotType>14</SlotType>
         <Tier>8</Tier>
         <Description>A silversilk robe masterfully sewn with morningdew spider threads.</Description>
-        <ActivateOnEquip stat="8" amount="9">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="7" amount="4">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="9">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="4">IncrementStat</ActivateOnEquip>
         <BagType>2</BagType>
         <FameBonus>1</FameBonus>
         <feedPower>77</feedPower>
@@ -5911,8 +5897,8 @@
         <SlotType>14</SlotType>
         <Tier>9</Tier>
         <Description>A beautiful and versatile robe of the lightest magethread.</Description>
-        <ActivateOnEquip stat="8" amount="10">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="7" amount="4">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="10">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="4">IncrementStat</ActivateOnEquip>
         <BagType>2</BagType>
         <FameBonus>1</FameBonus>
         <feedPower>110</feedPower>
@@ -5929,8 +5915,8 @@
         <Tier>10</Tier>
         <Description>A highly decorated robe of purple wizardcloth, imbued with powers of sorcery and darkness.
         </Description>
-        <ActivateOnEquip stat="8" amount="11">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="7" amount="5">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="11">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="5">IncrementStat</ActivateOnEquip>
         <BagType>4</BagType>
         <FameBonus>2</FameBonus>
         <feedPower>155</feedPower>
@@ -5946,8 +5932,8 @@
         <SlotType>14</SlotType>
         <Tier>11</Tier>
         <Description>A robe of rarest moonsilk, enhanced long ago with deep nocturnal enchantments.</Description>
-        <ActivateOnEquip stat="8" amount="12">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="7" amount="5">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="12">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="5">IncrementStat</ActivateOnEquip>
         <BagType>4</BagType>
         <FameBonus>3</FameBonus>
         <feedPower>218</feedPower>
@@ -5964,8 +5950,8 @@
         <Description>A brightly colored robe of metallic threads, woven in the ancient elvish style and steeped in fey
             auras.
         </Description>
-        <ActivateOnEquip stat="8" amount="13">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="7" amount="6">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="13">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="6">IncrementStat</ActivateOnEquip>
         <BagType>4</BagType>
         <FameBonus>4</FameBonus>
         <feedPower>308</feedPower>
@@ -5982,8 +5968,8 @@
         <Description>A bloodweft robe adorned with rubies and firegarnets, worn by an ancient sect of masterful
             wizards.
         </Description>
-        <ActivateOnEquip stat="8" amount="14">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="7" amount="6">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="14">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="6">IncrementStat</ActivateOnEquip>
         <BagType>4</BagType>
         <FameBonus>4</FameBonus>
         <feedPower>435</feedPower>
@@ -5999,8 +5985,8 @@
         <Tier>14</Tier>
         <Description>A robe of gossamer glowthread, used by the sorceress matriarchs of the western kingdoms.
         </Description>
-        <ActivateOnEquip stat="8" amount="15">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="7" amount="7">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="15">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="7">IncrementStat</ActivateOnEquip>
         <BagType>9</BagType>
         <FameBonus>5</FameBonus>
         <feedPower>650</feedPower>
@@ -6018,8 +6004,8 @@
         <Description>A phenomenal robe magically woven from fibers of sapphire, topaz and lapis lazuli, created for the
             archwizard of the seraphic realms.
         </Description>
-        <ActivateOnEquip stat="8" amount="16">IncrementStat</ActivateOnEquip>
-        <ActivateOnEquip stat="7" amount="8">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="21" amount="16">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="8">IncrementStat</ActivateOnEquip>
         <BagType>9</BagType>
         <FameBonus>6</FameBonus>
         <feedPower>950</feedPower>
